@@ -10,8 +10,7 @@
     </c:when>
     <c:otherwise>
         <p>Type: Series</p>
-        <p>Number of seasons: ${item.numberOfSeasons}</p>
-        <p>Number of episodes: ${item.numberOfEpisodes}</p>
+        <p>Number of seasons: ${item.totalSeasons}</p>
     </c:otherwise>
 </c:choose>
 

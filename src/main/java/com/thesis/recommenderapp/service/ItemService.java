@@ -1,19 +1,28 @@
 package com.thesis.recommenderapp.service;
 
+import java.io.IOException;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.thesis.recommenderapp.dao.ItemDao;
 import com.thesis.recommenderapp.domain.Item;
 import com.thesis.recommenderapp.domain.Movie;
 import com.thesis.recommenderapp.domain.Series;
 import com.thesis.recommenderapp.domain.UploadItemRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
+@Slf4j
 public class ItemService {
 
     @Autowired
     private ItemDao itemDao;
+    @Autowired
+    private ImdbAPIGetService imdbAPIGetService;
+    @Autowired
+    private JsonParserService jsonParserService;
 
     public Item getItem(Long id) {
         return itemDao.findById(id).get();
@@ -23,28 +32,21 @@ public class ItemService {
         return itemDao.findAllByTitleContainingIgnoreCase(substring);
     }
 
-    public void uploadItem(UploadItemRequest uploadItemRequest) {
-        if(uploadItemRequest.getType().equals("movie")) {
-            uploadMovie(uploadItemRequest);
-        } else {
-            uploadSeries(uploadItemRequest);
+    public void saveItem(UploadItemRequest uploadItemRequest) {
+        try {
+            String generalSearchResult = imdbAPIGetService.getGeneralSearchResults(uploadItemRequest);
+            String imdbId = jsonParserService.getImdbId(generalSearchResult);
+            if (!itemDao.existsByImdbId(imdbId)) {
+                String specificSearchResult = imdbAPIGetService.getSpecificSearchResults(jsonParserService.getImdbId(generalSearchResult));
+                if (uploadItemRequest.getType().equals("movie")) {
+                    itemDao.save(jsonParserService.getMovie(specificSearchResult));
+                } else {
+                    itemDao.save(jsonParserService.getSeries(specificSearchResult));
+                }
+            }
+        } catch (IOException e) {
+            log.error(e.getMessage());
         }
-    }
-
-    private void uploadSeries(UploadItemRequest uploadItemRequest) {
-        Series item = new Series();
-        item.setTitle(uploadItemRequest.getTitle());
-        item.setDescription(uploadItemRequest.getDescription());
-        item.setNumberOfSeasons(uploadItemRequest.getNumberOfSeasons());
-        item.setNumberOfEpisodes(uploadItemRequest.getNumberOfEpisodes());
-        itemDao.save(item);
-    }
-
-    private void uploadMovie(UploadItemRequest uploadItemRequest) {
-        Movie item = new Movie();
-        item.setTitle(uploadItemRequest.getTitle());
-        item.setDescription(uploadItemRequest.getDescription());
-        itemDao.save(item);
     }
 
 }

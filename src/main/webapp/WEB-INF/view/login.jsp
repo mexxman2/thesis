@@ -13,12 +13,18 @@
         </div>
         <h2>Login or Register to start!</h2>
         <form:form modelAttribute="loginRequest" action="login">
-            <form:errors  element="div" />
-            <label for="username">Username</label>
-            <form:input path="username" id="username" placeholder="Username" />
-            <label for="password">Password</label>
-            <form:password path="password" id="password" placeholder="Password" />
-            <button type="submit">Login</button>
+            <form:errors path="*" element="div" cssClass="validation-error" />
+            <p>
+                <label for="username">Username</label>
+                <form:input path="username" id="username" placeholder="Username" />
+            </p>
+            <p>
+                <label for="password">Password</label>
+                <form:password path="password" id="password" placeholder="Password" />
+            </p>
+            <p>
+                <button type="submit">Login</button>
+            </p>
         </form:form>
     </body>
 </html>

@@ -4,7 +4,7 @@
 <h2>Registration</h2>
 
 <form:form modelAttribute="registerUser" method="POST" action="registerUserPost">
-    <form:errors path="*" element="div" />
+    <form:errors path="*" element="div" cssClass="validation-error" />
     <p>
         <label for="input_username">Username</label>
         <form:input path="userName" id="input_username" />

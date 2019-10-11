@@ -1,17 +1,16 @@
 package com.thesis.recommenderapp.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.thesis.recommenderapp.dao.WatchedDao;
 import com.thesis.recommenderapp.domain.AddToWatchListItem;
 import com.thesis.recommenderapp.domain.Item;
 import com.thesis.recommenderapp.domain.User;
 import com.thesis.recommenderapp.domain.Watched;
-import com.thesis.recommenderapp.service.exceptions.AlreadyOnListException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class WatchedService {
@@ -32,15 +31,15 @@ public class WatchedService {
         User user = userService.getUserByUserName(userName);
         watched.setUser(user);
         List<Item> items = getWatchedItems(user.getId());
-        //int index = getIndex(items, watched.getItem());
+        int index = getIndex(items, watched.getItem());
         addToWatchListItem.getItemId();
-        /*if(index == items.size()) {
+        if(index == items.size() && !items.isEmpty()) {
             user.updateWatched(index, watched);
         } else {
             user.addToWatched(watched);
         }
         watchedDao.save(watched);
-        userService.saveUser(user);*/
+        userService.saveUser(user);
     }
 
     public List<Item> getWatchedItems(Long userId) {
@@ -67,7 +66,6 @@ public class WatchedService {
             condition = itemId.equals(item.getId());
             i++;
         }
-
         return i;
     }
 

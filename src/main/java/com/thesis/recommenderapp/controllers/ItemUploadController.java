@@ -1,10 +1,7 @@
 package com.thesis.recommenderapp.controllers;
 
-import com.thesis.recommenderapp.dao.ItemDao;
-import com.thesis.recommenderapp.domain.Item;
-import com.thesis.recommenderapp.domain.SearchString;
-import com.thesis.recommenderapp.domain.UploadItemRequest;
-import com.thesis.recommenderapp.service.ItemService;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +10,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.validation.Valid;
+import com.thesis.recommenderapp.domain.SearchString;
+import com.thesis.recommenderapp.domain.UploadItemRequest;
+import com.thesis.recommenderapp.service.ItemService;
+import com.thesis.recommenderapp.service.exceptions.SearchReturnedErrorException;
+import com.thesis.recommenderapp.service.exceptions.ShouldBeMoreSpecificException;
 
 @Controller
 public class ItemUploadController {
@@ -42,8 +43,16 @@ public class ItemUploadController {
         if (bindingResult.hasErrors()) {
             result = "upload";
         } else {
-            itemService.uploadItem(uploadItemRequest);
-            result = "redirect:index";
+            try {
+                itemService.saveItem(uploadItemRequest);
+                result = "redirect:index";
+            } catch (SearchReturnedErrorException e) {
+                bindingResult.rejectValue("title", "error.notFound", "I couldn't find that item on imdb");
+                result = "upload";
+            } catch (ShouldBeMoreSpecificException e) {
+                bindingResult.rejectValue("title", "error.notSpecificEnough", "Please add a more specific title");
+                result = "upload";
+            }
         }
         return result;
     }

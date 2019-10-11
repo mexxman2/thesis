@@ -1,10 +1,6 @@
 package com.thesis.recommenderapp.service;
 
-import com.thesis.recommenderapp.dao.WatchedDao;
-import com.thesis.recommenderapp.domain.Item;
-import com.thesis.recommenderapp.domain.Watched;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import static java.util.stream.Collectors.toMap;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,7 +9,12 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import static java.util.stream.Collectors.toMap;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.thesis.recommenderapp.dao.WatchedDao;
+import com.thesis.recommenderapp.domain.Item;
+import com.thesis.recommenderapp.domain.Watched;
 
 @Service
 public class RecommendationService {

@@ -1,6 +1,6 @@
 package com.thesis.recommenderapp.domain;
 
-import lombok.Data;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,7 +9,7 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-import java.util.List;
+import lombok.Data;
 
 @Entity
 @Data
@@ -36,6 +36,10 @@ public class User {
 
     public void addFriend(User user) {
         friends.add(user);
+    }
+
+    public void updateWatched(int index, Watched watched) {
+        this.watched.set(index, watched);
     }
 
 }

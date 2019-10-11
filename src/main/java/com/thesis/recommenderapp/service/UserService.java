@@ -1,15 +1,15 @@
 package com.thesis.recommenderapp.service;
 
-import com.thesis.recommenderapp.dao.UserDao;
-import com.thesis.recommenderapp.domain.RegistrationRequest;
-import com.thesis.recommenderapp.domain.User;
-import com.thesis.recommenderapp.service.exceptions.UsernameAlreadyExistsException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.thesis.recommenderapp.dao.UserDao;
+import com.thesis.recommenderapp.domain.RegistrationRequest;
+import com.thesis.recommenderapp.domain.User;
+import com.thesis.recommenderapp.service.exceptions.UsernameAlreadyExistsException;
 
 @Service
 public class UserService {

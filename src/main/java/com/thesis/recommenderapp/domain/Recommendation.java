@@ -1,8 +1,8 @@
 package com.thesis.recommenderapp.domain;
 
-import lombok.Data;
-
 import java.util.List;
+
+import lombok.Data;
 
 @Data
 public class Recommendation {
