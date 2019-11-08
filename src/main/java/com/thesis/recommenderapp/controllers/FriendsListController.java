@@ -18,6 +18,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.thesis.recommenderapp.domain.EmailAddress;
 import com.thesis.recommenderapp.domain.SearchString;
@@ -59,7 +60,11 @@ public class FriendsListController {
         if (violations.isEmpty()) {
             model.addAttribute("emailSent", true);
             User user = userService.getUserByUserName(principal.getName());
-            emailSenderService.sendInvite(email.getEmail(), user, request.getLocalName());
+            String baseUrl = ServletUriComponentsBuilder.fromRequestUri(request)
+                    .replacePath(null)
+                    .build()
+                    .toUriString();
+            emailSenderService.sendInvite(email.getEmail(), user, baseUrl);
         } else {
             for (ConstraintViolation<EmailAddress> violation : violations) {
                 bindingResult.reject(violation.getMessage(), violation.getMessage());
