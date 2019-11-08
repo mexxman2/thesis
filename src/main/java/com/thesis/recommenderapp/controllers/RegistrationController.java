@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -31,14 +32,13 @@ public class RegistrationController {
     }
 
     @RequestMapping(value = "register")
-    public String registerForm() {
-        return "register";
+    public String registerForm(Authentication authentication) {
+        return authentication.isAuthenticated() ? "redirect:index" : "register";
     }
 
     @RequestMapping(value = "register", params = "friendId")
-    public String registerFriendForm(@RequestParam String friendId, HttpServletResponse response) {
-        response.addCookie(new Cookie("friendId", friendId));
-        return "register";
+    public String registerFriendForm(@RequestParam String friendId, HttpServletResponse response, Authentication authentication) {
+        return authentication.isAuthenticated() ? "redirect:index" : addCookieAndShowPage(response, friendId);
     }
 
     @RequestMapping(value = "registerUserPost", method = RequestMethod.POST)
@@ -53,21 +53,36 @@ public class RegistrationController {
         return result;
     }
 
+    private String addCookieAndShowPage(HttpServletResponse response, String friendId) {
+        response.addCookie(new Cookie("friendId", friendId));
+        return "register";
+    }
+
     private String registerUserIfNotYetPresent(RegistrationRequest registrationRequest, BindingResult bindingResult,
                                                String friendId, HttpServletRequest request) {
         String result;
         try {
-            Long id = userService.registerUser(registrationRequest);
-            result = "redirect:index";
-            addFriendIfNeeded(friendId, id);
-            request.login(registrationRequest.getUserName(), registrationRequest.getPassword());
+            result = registerAndLogin(registrationRequest, friendId, request);
         } catch (UsernameAlreadyExistsException e) {
-            bindingResult.rejectValue("userName", "error.userAlreadyExists", "Username already exists.");
-            result = "register";
+            result = rejectRegistration(bindingResult);
         } catch (ServletException e) {
             result = "redirect:login";
         }
         return result;
+    }
+
+    private String rejectRegistration(BindingResult bindingResult) {
+        String result;
+        bindingResult.rejectValue("userName", "error.userAlreadyExists", "Username already exists.");
+        result = "register";
+        return result;
+    }
+
+    private String registerAndLogin(RegistrationRequest registrationRequest, String friendId, HttpServletRequest request) throws ServletException {
+        Long id = userService.registerUser(registrationRequest);
+        addFriendIfNeeded(friendId, id);
+        request.login(registrationRequest.getUserName(), registrationRequest.getPassword());
+        return "redirect:index";
     }
 
     private void addFriendIfNeeded(String friendId, Long id) {

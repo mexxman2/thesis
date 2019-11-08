@@ -44,12 +44,16 @@ public class WatchListController {
         User user = userService.getUser(userId);
         User currentUser = userService.getUserByUserName(principal.getName());
         List<Item> watchedItems = watchedService.getWatchedItems(user.getId());
+        addUserAttributesIfNotSameAsCurrentUser(model, user, currentUser);
+        addAttributes(model, page, watchedItems);
+        return "watch_list";
+    }
+
+    private void addUserAttributesIfNotSameAsCurrentUser(Model model, User user, User currentUser) {
         if (!user.equals(currentUser)) {
             model.addAttribute("user", user);
             model.addAttribute("isFriend", currentUser.getFriends().contains(user));
         }
-        addAttributes(model, page, watchedItems);
-        return "watch_list";
     }
 
     private void addAttributes(Model model, Integer page, List<Item> watchedItems) {

@@ -42,16 +42,22 @@ public class ItemUploadController {
         if (bindingResult.hasErrors()) {
             result = "upload";
         } else {
-            try {
-                Long id = itemService.saveItem(uploadItemRequest);
-                result = "redirect:details?itemId=" + id;
-            } catch (SearchReturnedErrorException e) {
-                bindingResult.rejectValue("title", "error.notFound", "I couldn't find that item on imdb");
-                result = "upload";
-            } catch (ShouldBeMoreSpecificException e) {
-                bindingResult.rejectValue("title", "error.notSpecificEnough", "Please add a more specific title");
-                result = "upload";
-            }
+            result = trySaveItem(uploadItemRequest, bindingResult);
+        }
+        return result;
+    }
+
+    private String trySaveItem(@ModelAttribute("uploadItem") @Valid UploadItemRequest uploadItemRequest, BindingResult bindingResult) {
+        String result;
+        try {
+            Long id = itemService.saveItem(uploadItemRequest);
+            result = "redirect:details?itemId=" + id;
+        } catch (SearchReturnedErrorException e) {
+            bindingResult.rejectValue("title", "error.notFound", "I couldn't find that item on imdb");
+            result = "upload";
+        } catch (ShouldBeMoreSpecificException e) {
+            bindingResult.rejectValue("title", "error.notSpecificEnough", "Please add a more specific title");
+            result = "upload";
         }
         return result;
     }

@@ -58,19 +58,27 @@ public class FriendsListController {
         Validator validator = factory.getValidator();
         Set<ConstraintViolation<EmailAddress>> violations = validator.validate(email);
         if (violations.isEmpty()) {
-            model.addAttribute("emailSent", true);
-            User user = userService.getUserByUserName(principal.getName());
-            String baseUrl = ServletUriComponentsBuilder.fromRequestUri(request)
-                    .replacePath(null)
-                    .build()
-                    .toUriString();
-            emailSenderService.sendInvite(email.getEmail(), user, baseUrl);
+            sendInvite(email, principal, model, request);
         } else {
-            for (ConstraintViolation<EmailAddress> violation : violations) {
-                bindingResult.reject(violation.getMessage(), violation.getMessage());
-            }
+            rejectSendInvite(bindingResult, violations);
         }
         return "forward:friends_list?page=1";
+    }
+
+    private void rejectSendInvite(BindingResult bindingResult, Set<ConstraintViolation<EmailAddress>> violations) {
+        for (ConstraintViolation<EmailAddress> violation : violations) {
+            bindingResult.reject(violation.getMessage(), violation.getMessage());
+        }
+    }
+
+    private void sendInvite(@ModelAttribute("email") EmailAddress email, Principal principal, Model model, HttpServletRequest request) {
+        model.addAttribute("emailSent", true);
+        User user = userService.getUserByUserName(principal.getName());
+        String baseUrl = ServletUriComponentsBuilder.fromRequestUri(request)
+                .replacePath(null)
+                .build()
+                .toUriString();
+        emailSenderService.sendInvite(email.getEmail(), user, baseUrl);
     }
 
     private void addAttributes(Model model, Integer page, List<User> friends) {
