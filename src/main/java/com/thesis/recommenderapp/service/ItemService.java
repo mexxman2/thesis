@@ -1,20 +1,20 @@
 package com.thesis.recommenderapp.service;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.thesis.recommenderapp.dao.ItemDao;
 import com.thesis.recommenderapp.domain.Item;
-import com.thesis.recommenderapp.domain.Movie;
-import com.thesis.recommenderapp.domain.Series;
 import com.thesis.recommenderapp.domain.UploadItemRequest;
-
-import lombok.extern.slf4j.Slf4j;
+import com.thesis.recommenderapp.service.exceptions.ImdbException;
 
 @Service
-@Slf4j
+@Transactional
 public class ItemService {
 
     @Autowired
@@ -32,20 +32,53 @@ public class ItemService {
         return itemDao.findAllByTitleContainingIgnoreCase(substring);
     }
 
-    public void saveItem(UploadItemRequest uploadItemRequest) {
+    public Long saveItem(UploadItemRequest uploadItemRequest) {
         try {
-            String generalSearchResult = imdbAPIGetService.getGeneralSearchResults(uploadItemRequest);
-            String imdbId = jsonParserService.getImdbId(generalSearchResult);
-            if (!itemDao.existsByImdbId(imdbId)) {
-                String specificSearchResult = imdbAPIGetService.getSpecificSearchResults(jsonParserService.getImdbId(generalSearchResult));
-                if (uploadItemRequest.getType().equals("movie")) {
-                    itemDao.save(jsonParserService.getMovie(specificSearchResult));
-                } else {
-                    itemDao.save(jsonParserService.getSeries(specificSearchResult));
-                }
-            }
+            return saveByTitleOrURL(uploadItemRequest);
         } catch (IOException e) {
-            log.error(e.getMessage());
+            throw new ImdbException(e.getMessage());
+        }
+    }
+
+    private Long saveByTitleOrURL(UploadItemRequest uploadItemRequest) throws IOException {
+        Long id;
+        if (!uploadItemRequest.getTitleOrURL().contains("title/tt")) {
+            id = saveByTitle(uploadItemRequest);
+        } else {
+            id = saveByURL(uploadItemRequest);
+        }
+        return id;
+    }
+
+    private Long saveByTitle(UploadItemRequest uploadItemRequest) throws IOException {
+        String generalSearchResult = imdbAPIGetService.getGeneralSearchResults(uploadItemRequest);
+        String imdbId = jsonParserService.getImdbId(generalSearchResult);
+        if (!itemDao.existsByImdbId(imdbId)) {
+            String specificSearchResult = imdbAPIGetService.getSpecificSearchResults(jsonParserService.getImdbId(generalSearchResult));
+            return saveMovieOrSeries(uploadItemRequest, specificSearchResult);
+        } else {
+            return itemDao.findByImdbId(imdbId).getId();
+        }
+    }
+
+    private Long saveMovieOrSeries(UploadItemRequest uploadItemRequest, String specificSearchResult) {
+        Long id;
+        if (uploadItemRequest.getType().equals("movie")) {
+            id = itemDao.save(jsonParserService.getMovie(specificSearchResult)).getId();
+        } else {
+            id = itemDao.save(jsonParserService.getSeries(specificSearchResult)).getId();
+        }
+        return id;
+    }
+
+    private Long saveByURL(UploadItemRequest uploadItemRequest) throws IOException {
+        List<String> urlParts = Arrays.asList(uploadItemRequest.getTitleOrURL().split("/"));
+        String imdbId = urlParts.get(urlParts.indexOf("title") + 1);
+        if (!itemDao.existsByImdbId(imdbId)) {
+            String specificSearchResult = imdbAPIGetService.getSpecificSearchResults(imdbId);
+            return saveMovieOrSeries(uploadItemRequest, specificSearchResult);
+        } else {
+            return itemDao.findByImdbId(imdbId).getId();
         }
     }
 

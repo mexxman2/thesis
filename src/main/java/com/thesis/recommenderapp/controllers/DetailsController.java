@@ -28,7 +28,7 @@ public class DetailsController {
         return new SearchString();
     }
 
-    @RequestMapping("/details")
+    @RequestMapping("details")
     public String details(Model model, @RequestParam Long itemId) {
         Item item = itemService.getItem(itemId);
         boolean isMovie = item.getClass().getSimpleName().equals("Movie");

@@ -1,6 +1,8 @@
 package com.thesis.recommenderapp.domain;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,7 +30,7 @@ public class User {
     @OneToMany
     private List<Watched> watched;
     @OneToMany
-    private List<User> friends;
+    private Set<User> friends;
 
     public void addToWatched(Watched watch) {
         watched.add(watch);
@@ -38,8 +40,32 @@ public class User {
         friends.add(user);
     }
 
-    public void updateWatched(int index, Watched watched) {
-        this.watched.set(index, watched);
+    public void deleteFriend(User user) {
+        friends.remove(user);
+    }
+
+    public void updateWatched(Watched watched) {
+        this.watched.stream()
+                .filter(myWatched -> myWatched.getItem().equals(watched.getItem()))
+                .findFirst().get()
+                .setRating(watched.getRating());
+    }
+
+    public void deleteWatched(Item item) {
+        watched.removeIf(myWatched -> myWatched.getItem().equals(item));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
 }

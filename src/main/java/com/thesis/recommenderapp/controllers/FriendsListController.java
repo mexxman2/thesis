@@ -1,9 +1,11 @@
 package com.thesis.recommenderapp.controllers;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
@@ -20,16 +22,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.thesis.recommenderapp.domain.EmailAddress;
 import com.thesis.recommenderapp.domain.SearchString;
 import com.thesis.recommenderapp.domain.User;
+import com.thesis.recommenderapp.service.EmailSenderService;
 import com.thesis.recommenderapp.service.UserService;
 
-import lombok.extern.slf4j.Slf4j;
-
 @Controller
-@Slf4j
 public class FriendsListController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private EmailSenderService emailSenderService;
 
     @ModelAttribute("searchString")
     public SearchString createSearchStringModel() {
@@ -43,32 +45,34 @@ public class FriendsListController {
 
     @RequestMapping("friends_list")
     public String friendsList(Model model, @RequestParam Integer page, Principal principal) {
-        List<User> friends = userService.getFriends(principal.getName());
-        addAttributes(model, page, friends);
+        Set<User> friends = userService.getFriends(principal.getName());
+        addAttributes(model, page, new ArrayList<>(friends));
         return "friends_list";
     }
 
     @RequestMapping("sendEmail")
-    public String sendEmail(@ModelAttribute("email") EmailAddress email, BindingResult bindingResult, Principal principal, Model model) {
+    public String sendEmail(@ModelAttribute("email") EmailAddress email, BindingResult bindingResult,
+                            Principal principal, Model model, HttpServletRequest request) {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
         Set<ConstraintViolation<EmailAddress>> violations = validator.validate(email);
         if (violations.isEmpty()) {
             model.addAttribute("emailSent", true);
-            //TODO: implement email send
+            User user = userService.getUserByUserName(principal.getName());
+            emailSenderService.sendInvite(email.getEmail(), user, request.getRemoteHost());
         } else {
             for (ConstraintViolation<EmailAddress> violation : violations) {
                 bindingResult.reject(violation.getMessage(), violation.getMessage());
             }
         }
-        return "friends_list";
+        return "redirect:friends_list?page=1";
     }
 
     private void addAttributes(Model model, Integer page, List<User> friends) {
         if (friends.size() > page * 10) {
-            model.addAttribute("items", friends.subList((page - 1) * 10, page * 10));
+            model.addAttribute("friends", friends.subList((page - 1) * 10, page * 10));
         } else {
-            model.addAttribute("items", friends.subList((page - 1) * 10, friends.size()));
+            model.addAttribute("friends", friends.subList((page - 1) * 10, friends.size()));
         }
         model.addAttribute("prevPage", page - 1);
         model.addAttribute("nextPage", page + 1);

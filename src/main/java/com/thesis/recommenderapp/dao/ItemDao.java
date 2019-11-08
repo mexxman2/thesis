@@ -10,4 +10,6 @@ public interface ItemDao extends CrudRepository<Item, Long> {
 
     boolean existsByImdbId(String imdbId);
 
+    Item findByImdbId(String imdbId);
+
 }

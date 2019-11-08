@@ -7,8 +7,8 @@ import lombok.Data;
 @Data
 public class UploadItemRequest {
 
-    @NotEmpty(message = "Title cannot be empty")
-    private String title;
+    @NotEmpty(message = "Title or URL cannot be empty")
+    private String titleOrURL;
     @NotEmpty(message = "Type cannot be empty")
     private String type;
 

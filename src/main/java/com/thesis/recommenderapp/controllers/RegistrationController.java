@@ -1,5 +1,6 @@
 package com.thesis.recommenderapp.controllers;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.thesis.recommenderapp.domain.RegistrationRequest;
 import com.thesis.recommenderapp.service.UserService;
@@ -25,26 +27,35 @@ public class RegistrationController {
     }
 
     @RequestMapping(value = "register", method = RequestMethod.GET)
-    public String registerForm() {
+    public String registerForm(@RequestParam Long friendId, HttpSession httpSession) {
+        if (friendId != null) {
+            httpSession.setAttribute("friendId", friendId);
+        }
         return "register";
     }
 
     @RequestMapping(value = "registerUserPost", method = RequestMethod.POST)
-    public String registerPost(@ModelAttribute("registerUser") @Valid RegistrationRequest registrationRequest, BindingResult bindingResult) {
+    public String registerPost(@ModelAttribute("registerUser") @Valid RegistrationRequest registrationRequest,
+                               BindingResult bindingResult, HttpSession httpSession) {
         String result;
         if (bindingResult.hasErrors()) {
             result = "register";
         } else {
-            result = registerUserIfNotYetPresent(registrationRequest, bindingResult);
+            Long id = (Long) httpSession.getAttribute("friendId");
+            result = registerUserIfNotYetPresent(registrationRequest, bindingResult, id);
         }
         return result;
+        //TODO: login after register.
     }
 
-    private String registerUserIfNotYetPresent(RegistrationRequest registrationRequest, BindingResult bindingResult) {
+    private String registerUserIfNotYetPresent(RegistrationRequest registrationRequest, BindingResult bindingResult, Long friendId) {
         String result;
         try {
-            userService.registerUser(registrationRequest);
+            Long id = userService.registerUser(registrationRequest);
             result = "redirect:index";
+            if (friendId != null) {
+                userService.addFriend(friendId, id);
+            }
         } catch (UsernameAlreadyExistsException e) {
             bindingResult.rejectValue("userName", "error.userAlreadyExists", "Username already exists.");
             result = "register";

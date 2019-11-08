@@ -2,17 +2,13 @@ package com.thesis.recommenderapp.service;
 
 import java.io.IOException;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.thesis.recommenderapp.domain.UploadItemRequest;
 
-import lombok.extern.slf4j.Slf4j;
-
 @Service
-@Slf4j
 public class ImdbAPIGetService {
 
     private OkHttpClient okHttpClient = new OkHttpClient();
@@ -25,7 +21,6 @@ public class ImdbAPIGetService {
                 .addHeader("x-rapidapi-key", "2dc4d4daedmshd5b3479ae310a95p1efc8fjsn62e3e5e0ad7e")
                 .build();
 
-        log.info(createGeneralSearchURL(uploadItemRequest));
         return okHttpClient.newCall(request).execute().body().string();
     }
 
@@ -37,7 +32,6 @@ public class ImdbAPIGetService {
                 .addHeader("x-rapidapi-key", "2dc4d4daedmshd5b3479ae310a95p1efc8fjsn62e3e5e0ad7e")
                 .build();
 
-        log.info(createSpecificSearchURL(imdbId));
         return okHttpClient.newCall(request).execute().body().string();
     }
 
@@ -45,7 +39,7 @@ public class ImdbAPIGetService {
         StringBuilder urlBuilder = new StringBuilder("https://movie-database-imdb-alternative.p.rapidapi.com/?page=1&r=json&type=");
         urlBuilder.append(uploadItemRequest.getType());
         urlBuilder.append("&s=");
-        urlBuilder.append(transform(uploadItemRequest.getTitle()));
+        urlBuilder.append(transform(uploadItemRequest.getTitleOrURL()));
         return urlBuilder.toString();
     }
 

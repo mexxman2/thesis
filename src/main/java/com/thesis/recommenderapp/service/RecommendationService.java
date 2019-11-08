@@ -22,7 +22,7 @@ public class RecommendationService {
     @Autowired
     private WatchedDao watchedDao;
 
-    public List<Item> getTopTenPopularItems(){
+    public List<Item> getTopTenPopularItems() {
         Map<Item, Integer> timesWatched = getItemsWithTimesWatched();
         Map<Item, Integer> sorted = sortMap(timesWatched);
         List<Item> items = new ArrayList<>(sorted.keySet());
@@ -31,11 +31,11 @@ public class RecommendationService {
 
     private Map<Item, Integer> sortMap(Map<Item, Integer> timesWatched) {
         return timesWatched.entrySet()
-            .stream()
-            .sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
-            .collect(
-                toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e2,
-                    LinkedHashMap::new));
+                .stream()
+                .sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
+                .collect(
+                        toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e2,
+                                LinkedHashMap::new));
     }
 
     private Map<Item, Integer> getItemsWithTimesWatched() {

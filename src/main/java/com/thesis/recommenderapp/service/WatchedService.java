@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.thesis.recommenderapp.dao.WatchedDao;
 import com.thesis.recommenderapp.domain.AddToWatchListItem;
@@ -13,6 +14,7 @@ import com.thesis.recommenderapp.domain.User;
 import com.thesis.recommenderapp.domain.Watched;
 
 @Service
+@Transactional
 public class WatchedService {
 
     @Autowired
@@ -31,14 +33,12 @@ public class WatchedService {
         User user = userService.getUserByUserName(userName);
         watched.setUser(user);
         List<Item> items = getWatchedItems(user.getId());
-        int index = getIndex(items, watched.getItem());
-        addToWatchListItem.getItemId();
-        if(index == items.size() && !items.isEmpty()) {
-            user.updateWatched(index, watched);
+        if (items.contains(watched.getItem())) {
+            user.updateWatched(watched);
         } else {
             user.addToWatched(watched);
+            watchedDao.save(watched);
         }
-        watchedDao.save(watched);
         userService.saveUser(user);
     }
 
@@ -48,25 +48,11 @@ public class WatchedService {
         return result;
     }
 
-    /*public Optional<Watched> getWatchedIfPresent(Long itemId, Long userId) {
-        Optional<Watched> myWatched = Optional.empty();
-        watchedDao.findAllByUserId(userId).forEach((watched) -> {
-            if(watched.getItem().getId().equals(itemId)) {
-                myWatched = Optional.of(watched);
-            }
-        });
-        return watched;
-    }*/
-
-    private int getIndex(List<Item> items, Item item) {
-        int i = 0;
-        boolean condition = false;
-        while(!condition && i < items.size()){
-            Long itemId = items.get(i).getId();
-            condition = itemId.equals(item.getId());
-            i++;
-        }
-        return i;
+    public void deleteWatched(User user, Long itemId) {
+        Item item = itemService.getItem(itemId);
+        user.deleteWatched(item);
+        watchedDao.deleteByItem(item);
+        userService.saveUser(user);
     }
 
 }

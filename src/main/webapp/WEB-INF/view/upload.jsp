@@ -6,8 +6,8 @@
 <form:form modelAttribute="uploadItem" action="uploadItemPost">
     <form:errors path="*" element="div" cssClass="validation-error" />
     <p>
-        <label for="input_title">Title</label>
-        <form:input path="title" id="input_title" />
+        <label for="input_title_or_url">Title or URL</label>
+        <form:input path="titleOrURL" id="input_title_or_url" />
     </p>
     <p>
         <label for="movie">Movie</label>

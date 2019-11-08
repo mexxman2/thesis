@@ -8,8 +8,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.thesis.recommenderapp.domain.AddToWatchListItem;
 import com.thesis.recommenderapp.domain.Item;
 import com.thesis.recommenderapp.domain.SearchString;
 import com.thesis.recommenderapp.domain.User;
@@ -39,11 +41,28 @@ public class WatchListController {
     }
 
     @RequestMapping(value = "watch_list", params = {"userId", "page"})
-    public String otherUserWatchList(Model model, @RequestParam Long userId, @RequestParam Integer page) {
+    public String otherUserWatchList(Model model, @RequestParam Long userId, @RequestParam Integer page, Principal principal) {
         User user = userService.getUser(userId);
+        User currentUser = userService.getUserByUserName(principal.getName());
         List<Item> watchedItems = watchedService.getWatchedItems(user.getId());
-        model.addAttribute("user", user);
+        if (!user.equals(currentUser)) {
+            model.addAttribute("user", user);
+            model.addAttribute("isFriend", currentUser.getFriends().contains(user));
+        }
         addAttributes(model, page, watchedItems);
+        return "watch_list";
+    }
+
+    @RequestMapping(value = "addToWatchList", method = RequestMethod.POST)
+    public String addToWatchList(AddToWatchListItem addToWatchListItem, Principal principal) {
+        watchedService.saveWatched(addToWatchListItem, principal.getName());
+        return "forward:watch_list?page=1";
+    }
+
+    @RequestMapping("deleteItem")
+    public String deleteItemFromWatchList(@RequestParam Long itemId, Principal principal) {
+        User user = userService.getUserByUserName(principal.getName());
+        watchedService.deleteWatched(user, itemId);
         return "watch_list";
     }
 

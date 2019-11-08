@@ -1,5 +1,7 @@
 package com.thesis.recommenderapp.domain;
 
+import java.util.Objects;
+
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -37,5 +39,21 @@ public abstract class Item {
     String imdbRating;
     @JsonProperty("imdbID")
     String imdbId;
+    @JsonProperty("Poster")
+    String posterPath;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Item item = (Item) o;
+        return Objects.equals(id, item.id) &&
+                Objects.equals(imdbId, item.imdbId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, imdbId);
+    }
 
 }

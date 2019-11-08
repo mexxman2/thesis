@@ -2,6 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
+<img src="${item.posterPath}" alt="Poster">
 <h2>${item.title}</h2>
 <p>${item.description}</p>
 <c:choose>

@@ -4,7 +4,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,8 +43,8 @@ public class ItemUploadController {
             result = "upload";
         } else {
             try {
-                itemService.saveItem(uploadItemRequest);
-                result = "redirect:index";
+                Long id = itemService.saveItem(uploadItemRequest);
+                result = "redirect:details?itemId=" + id;
             } catch (SearchReturnedErrorException e) {
                 bindingResult.rejectValue("title", "error.notFound", "I couldn't find that item on imdb");
                 result = "upload";
