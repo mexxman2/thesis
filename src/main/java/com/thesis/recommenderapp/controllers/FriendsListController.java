@@ -59,13 +59,13 @@ public class FriendsListController {
         if (violations.isEmpty()) {
             model.addAttribute("emailSent", true);
             User user = userService.getUserByUserName(principal.getName());
-            emailSenderService.sendInvite(email.getEmail(), user, request.getLocalAddr());
+            emailSenderService.sendInvite(email.getEmail(), user, request.getLocalName());
         } else {
             for (ConstraintViolation<EmailAddress> violation : violations) {
                 bindingResult.reject(violation.getMessage(), violation.getMessage());
             }
         }
-        return "redirect:friends_list?page=1";
+        return "forward:friends_list?page=1";
     }
 
     private void addAttributes(Model model, Integer page, List<User> friends) {
