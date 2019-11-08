@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -32,13 +33,13 @@ public class RegistrationController {
     }
 
     @RequestMapping(value = "register")
-    public String registerForm(Authentication authentication) {
-        return authentication.isAuthenticated() ? "redirect:index" : "register";
+    public String registerForm() {
+        return SecurityContextHolder.getContext().getAuthentication().isAuthenticated() ? "redirect:index" : "register";
     }
 
     @RequestMapping(value = "register", params = "friendId")
-    public String registerFriendForm(@RequestParam String friendId, HttpServletResponse response, Authentication authentication) {
-        return authentication.isAuthenticated() ? "redirect:index" : addCookieAndShowPage(response, friendId);
+    public String registerFriendForm(@RequestParam String friendId, HttpServletResponse response) {
+        return SecurityContextHolder.getContext().getAuthentication().isAuthenticated() ? "redirect:index" : addCookieAndShowPage(response, friendId);
     }
 
     @RequestMapping(value = "registerUserPost", method = RequestMethod.POST)

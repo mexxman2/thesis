@@ -20,18 +20,27 @@ public class EmailSenderService {
 
     public void sendInvite(String email, User sender, String baseUrl) {
         try {
-            Properties prop = setUpProperties();
-            Session session = setUpSession(prop);
-            Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("recommenderapp2@gmail.com"));
-            message.setRecipient(Message.RecipientType.TO, new InternetAddress(email));
-            message.setSubject("Invitation");
-            StringBuilder text = createMessageText(email, sender, baseUrl);
-            message.setText(text.toString());
-            Transport.send(message);
+            sendMessage(email, sender, baseUrl);
         } catch (MessagingException e) {
             throw new EmailCouldNotBeSentException("Email could not be sent.");
         }
+    }
+
+    private void sendMessage(String email, User sender, String baseUrl) throws MessagingException {
+        Properties prop = setUpProperties();
+        Session session = setUpSession(prop);
+        Message message = generateMessage(email, sender, baseUrl, session);
+        Transport.send(message);
+    }
+
+    private Message generateMessage(String email, User sender, String baseUrl, Session session) throws MessagingException {
+        Message message = new MimeMessage(session);
+        message.setFrom(new InternetAddress("recommenderapp2@gmail.com"));
+        message.setRecipient(Message.RecipientType.TO, new InternetAddress(email));
+        message.setSubject("Invitation");
+        StringBuilder text = createMessageText(email, sender, baseUrl);
+        message.setText(text.toString());
+        return message;
     }
 
     private StringBuilder createMessageText(String email, User sender, String baseUrl) {
