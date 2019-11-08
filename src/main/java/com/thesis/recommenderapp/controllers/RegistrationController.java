@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -34,12 +35,12 @@ public class RegistrationController {
 
     @RequestMapping(value = "register")
     public String registerForm() {
-        return SecurityContextHolder.getContext().getAuthentication().isAuthenticated() ? "redirect:index" : "register";
+        return isAuthenticated() ? "redirect:index" : "register";
     }
 
     @RequestMapping(value = "register", params = "friendId")
     public String registerFriendForm(@RequestParam String friendId, HttpServletResponse response) {
-        return SecurityContextHolder.getContext().getAuthentication().isAuthenticated() ? "redirect:index" : addCookieAndShowPage(response, friendId);
+        return isAuthenticated() ? "redirect:index" : addCookieAndShowPage(response, friendId);
     }
 
     @RequestMapping(value = "registerUserPost", method = RequestMethod.POST)
@@ -52,6 +53,11 @@ public class RegistrationController {
             result = registerUserIfNotYetPresent(registrationRequest, bindingResult, friendId, request);
         }
         return result;
+    }
+
+    private boolean isAuthenticated(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication != null && !(authentication instanceof AnonymousAuthenticationToken) && authentication.isAuthenticated();
     }
 
     private String addCookieAndShowPage(HttpServletResponse response, String friendId) {
