@@ -33,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/index", "/", "/registerUserPost")
                 .permitAll()
                 .antMatchers("/register")
-                .anonymous()
+                .not().authenticated()
                 .anyRequest()
                 .authenticated()
                 .and()
