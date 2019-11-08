@@ -21,7 +21,7 @@ public class PersistenceConfig {
 
     @Bean
     public DataSource dataSource() {
-        return new DriverManagerDataSource("jdbc:mysql://localhost/recommenderapp", "root", "");
+        return new DriverManagerDataSource("jdbc:postgresql://ec2-46-137-91-216.eu-west-1.compute.amazonaws.com:5432/d9hmtpe468nhod", "vswcgnuxbmhhoe", "7da224c2fdc4607f8d554f9fb9d984d0491021994809cf0d3fed56d57f1390d4");
     }
 
     @Bean
@@ -50,7 +50,8 @@ public class PersistenceConfig {
     private Properties additionalProperties() {
         Properties properties = new Properties();
         properties.setProperty("hibernate.hbm2ddl.auto", "update");
-        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
+        properties.setProperty("spring.jpa.properties.hibernate.temp.use_jdbc_metadata_defaults", "false");
+        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
         properties.setProperty("hibernate.show_sql", "true");
 
         return properties;
