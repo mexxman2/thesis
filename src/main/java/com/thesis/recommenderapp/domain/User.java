@@ -1,5 +1,7 @@
 package com.thesis.recommenderapp.domain;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -30,9 +32,9 @@ public class User {
     private String password;
     private boolean enabled;
     @OneToMany
-    private List<Watched> watched;
+    private List<Watched> watched = new ArrayList<>();
     @OneToMany
-    private Set<User> friends;
+    private Set<User> friends = new HashSet<>();
 
     public void addToWatched(Watched watch) {
         watched.add(watch);
