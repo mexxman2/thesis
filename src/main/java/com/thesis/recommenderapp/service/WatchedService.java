@@ -19,10 +19,8 @@ public class WatchedService {
 
     @Autowired
     private WatchedDao watchedDao;
-
     @Autowired
     private ItemService itemService;
-
     @Autowired
     private UserService userService;
 

@@ -16,7 +16,6 @@ public class SearchResultsController {
 
     @Autowired
     private ItemService itemService;
-
     @Autowired
     private UserService userService;
 

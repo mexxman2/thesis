@@ -17,5 +17,4 @@ public class App extends SpringBootServletInitializer {
         SpringApplication.run(App.class, args);
     }
 
-    //TODO: remote-ban is működjön
 }

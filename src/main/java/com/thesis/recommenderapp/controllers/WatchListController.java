@@ -23,7 +23,6 @@ public class WatchListController {
 
     @Autowired
     private WatchedService watchedService;
-
     @Autowired
     private UserService userService;
 

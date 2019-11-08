@@ -18,7 +18,6 @@ public class UserService {
 
     @Autowired
     private UserDao userDao;
-
     @Autowired
     private PasswordEncoder passwordEncoder;
 
