@@ -59,7 +59,7 @@ public class FriendsListController {
         if (violations.isEmpty()) {
             model.addAttribute("emailSent", true);
             User user = userService.getUserByUserName(principal.getName());
-            emailSenderService.sendInvite(email.getEmail(), user, request.getRemoteHost());
+            emailSenderService.sendInvite(email.getEmail(), user, request.getLocalAddr());
         } else {
             for (ConstraintViolation<EmailAddress> violation : violations) {
                 bindingResult.reject(violation.getMessage(), violation.getMessage());
