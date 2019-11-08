@@ -53,19 +53,6 @@ public class WatchListController {
         return "watch_list";
     }
 
-    @RequestMapping(value = "addToWatchList", method = RequestMethod.POST)
-    public String addToWatchList(AddToWatchListItem addToWatchListItem, Principal principal) {
-        watchedService.saveWatched(addToWatchListItem, principal.getName());
-        return "forward:watch_list?page=1";
-    }
-
-    @RequestMapping("deleteItem")
-    public String deleteItemFromWatchList(@RequestParam Long itemId, Principal principal) {
-        User user = userService.getUserByUserName(principal.getName());
-        watchedService.deleteWatched(user, itemId);
-        return "watch_list";
-    }
-
     private void addAttributes(Model model, Integer page, List<Item> watchedItems) {
         if (watchedItems.size() > page * 10) {
             model.addAttribute("items", watchedItems.subList((page - 1) * 10, page * 10));

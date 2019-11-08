@@ -26,11 +26,14 @@ public class RegistrationController {
         return new RegistrationRequest();
     }
 
-    @RequestMapping(value = "register", method = RequestMethod.GET)
-    public String registerForm(@RequestParam Long friendId, HttpSession httpSession) {
-        if (friendId != null) {
-            httpSession.setAttribute("friendId", friendId);
-        }
+    @RequestMapping(value = "register")
+    public String registerForm(HttpSession httpSession) {
+        return "register";
+    }
+
+    @RequestMapping(value = "register", params = "friendId")
+    public String registerFriendForm(@RequestParam Long friendId, HttpSession httpSession) {
+        httpSession.setAttribute("friendId", friendId);
         return "register";
     }
 

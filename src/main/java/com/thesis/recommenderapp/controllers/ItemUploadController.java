@@ -31,7 +31,7 @@ public class ItemUploadController {
         return new UploadItemRequest();
     }
 
-    @RequestMapping(value = "upload", method = RequestMethod.GET)
+    @RequestMapping(value = "upload")
     public String upload() {
         return "upload";
     }
