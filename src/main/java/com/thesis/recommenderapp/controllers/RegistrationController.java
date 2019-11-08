@@ -1,16 +1,12 @@
 package com.thesis.recommenderapp.controllers;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -28,8 +24,6 @@ public class RegistrationController {
 
     @Autowired
     private UserService userService;
-    @Autowired
-    private AuthenticationManager authenticationManager;
 
     @ModelAttribute("registerUser")
     public RegistrationRequest createRegistrationRequestModel() {
@@ -66,10 +60,12 @@ public class RegistrationController {
             Long id = userService.registerUser(registrationRequest);
             result = "redirect:index";
             addFriendIfNeeded(friendId, id);
-            login(request, registrationRequest.getUserName(), registrationRequest.getPassword());
+            request.login(registrationRequest.getUserName(), registrationRequest.getPassword());
         } catch (UsernameAlreadyExistsException e) {
             bindingResult.rejectValue("userName", "error.userAlreadyExists", "Username already exists.");
             result = "register";
+        } catch (ServletException e) {
+            result = "redirect:login";
         }
         return result;
     }
@@ -78,15 +74,6 @@ public class RegistrationController {
         if (friendId != null) {
             userService.addFriend(Long.valueOf(friendId), id);
         }
-    }
-
-    private void login(HttpServletRequest request, String username, String password) {
-        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(username, password);
-        authToken.setDetails(new WebAuthenticationDetails(request));
-
-        Authentication authentication = authenticationManager.authenticate(authToken);
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 
 }
