@@ -1,5 +1,6 @@
 package com.thesis.recommenderapp.service;
 
+import com.thesis.recommenderapp.domain.Item;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,17 +19,28 @@ public class JsonParserService {
         JSONObject jsonObject = getObject(jsonString);
         try {
             JSONArray results = jsonObject.getJSONArray("Search");
+            String imdbId = results.getJSONObject(0).getString("imdbID");
             if (jsonObject.getInt("totalResults") > 10) {
-                throw new ShouldBeMoreSpecificException();
+                throw new ShouldBeMoreSpecificException(results.getJSONObject(0).getString("Title"), imdbId);
             }
-            return results.getJSONObject(0).getString("imdbID");
+            return imdbId;
         } catch (JSONException e) {
             throw new SearchReturnedErrorException();
         }
     }
 
-    public Series getSeries(String jsonString) {
+    public Item getItem(String jsonString) {
         JSONObject jsonObject = getObject(jsonString);
+        Item result;
+        if (jsonObject.getString("Type").equalsIgnoreCase("movie")) {
+            result = getMovie(jsonObject);
+        } else {
+            result = getSeries(jsonObject);
+        }
+        return result;
+    }
+
+    private Series getSeries(JSONObject jsonObject) {
         try {
             return Series.builder()
                     .title(jsonObject.getString("Title"))
@@ -46,8 +58,7 @@ public class JsonParserService {
         }
     }
 
-    public Movie getMovie(String jsonString) {
-        JSONObject jsonObject = getObject(jsonString);
+    private Movie getMovie(JSONObject jsonObject) {
         try {
             return Movie.builder()
                     .title(jsonObject.getString("Title"))

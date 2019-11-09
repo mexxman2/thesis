@@ -36,17 +36,13 @@ public class ImdbAPIGetService {
     }
 
     private String createGeneralSearchURL(UploadItemRequest uploadItemRequest) {
-        StringBuilder urlBuilder = new StringBuilder("https://movie-database-imdb-alternative.p.rapidapi.com/?page=1&r=json&type=");
-        urlBuilder.append(uploadItemRequest.getType());
-        urlBuilder.append("&s=");
-        urlBuilder.append(transform(uploadItemRequest.getTitleOrURL()));
-        return urlBuilder.toString();
+        String type = uploadItemRequest.getType();
+        String title = transform(uploadItemRequest.getTitleOrURL());
+        return String.format("https://movie-database-imdb-alternative.p.rapidapi.com/?page=1&r=json&type=%s&s=%s", type, title);
     }
 
     private String createSpecificSearchURL(String imdbId) {
-        StringBuilder urlBuilder = new StringBuilder("https://movie-database-imdb-alternative.p.rapidapi.com/?r=json&i=");
-        urlBuilder.append(imdbId);
-        return urlBuilder.toString();
+        return String.format("https://movie-database-imdb-alternative.p.rapidapi.com/?r=json&i=%s", imdbId);
     }
 
     private String transform(String title) {
