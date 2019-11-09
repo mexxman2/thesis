@@ -33,12 +33,12 @@ public class RegistrationController {
         return new RegistrationRequest();
     }
 
-    /*@RequestMapping(value = "register")
+    @RequestMapping(value = "register")
     public String registerForm() {
         return isAuthenticated() ? "redirect:index" : "register";
-    }*/
+    }
 
-    @RequestMapping("register")
+    @RequestMapping(value = "register", params = "friendId")
     public String registerFriendForm(@RequestParam String friendId, HttpServletResponse response) {
         return isAuthenticated() ? "redirect:index" : addCookieAndShowPage(response, friendId);
     }
