@@ -1,20 +1,20 @@
 package com.thesis.recommenderapp.domain;
 
+import lombok.Data;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-
-import lombok.Data;
 
 @Entity
 @Table(name = "reco_user")
@@ -33,7 +33,7 @@ public class User {
     private boolean enabled;
     @OneToMany
     private List<Watched> watched = new ArrayList<>();
-    @OneToMany
+    @ManyToMany
     private Set<User> friends = new HashSet<>();
 
     public void addToWatched(Watched watch) {
@@ -50,9 +50,9 @@ public class User {
 
     public void updateWatched(Watched watched) {
         this.watched.stream()
-                .filter(myWatched -> myWatched.getItem().equals(watched.getItem()))
-                .findFirst().get()
-                .setRating(watched.getRating());
+            .filter(myWatched -> myWatched.getItem().equals(watched.getItem()))
+            .findFirst().get()
+            .setRating(watched.getRating());
     }
 
     public void deleteWatched(Item item) {
@@ -61,8 +61,12 @@ public class User {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         User user = (User) o;
         return Objects.equals(id, user.id);
     }
