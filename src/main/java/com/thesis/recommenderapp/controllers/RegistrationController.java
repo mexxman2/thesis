@@ -46,13 +46,14 @@ public class RegistrationController {
     }
 
     @RequestMapping(value = "registerUserPost", method = RequestMethod.POST)
-    public String registerPost(@ModelAttribute("registerUser") @Valid RegistrationRequest registrationRequest,
-                               BindingResult bindingResult, @CookieValue(name = "friendId", defaultValue = "") String friendId, HttpServletRequest request) {
+    public String registerPost(@ModelAttribute("registerUser") @Valid RegistrationRequest registrationRequest, BindingResult bindingResult,
+                               @CookieValue(name = "friendId", required = false) Long friendId, HttpServletRequest request, HttpServletResponse response) {
         String result;
         if (bindingResult.hasErrors()) {
             result = "register";
         } else {
             result = registerUserIfNotYetPresent(registrationRequest, bindingResult, friendId, request);
+            deleteCookie(response);
         }
         return result;
     }
@@ -68,7 +69,7 @@ public class RegistrationController {
     }
 
     private String registerUserIfNotYetPresent(RegistrationRequest registrationRequest, BindingResult bindingResult,
-                                               String friendId, HttpServletRequest request) {
+                                               Long friendId, HttpServletRequest request) {
         String result;
         try {
             result = registerAndLogin(registrationRequest, friendId, request);
@@ -80,6 +81,12 @@ public class RegistrationController {
         return result;
     }
 
+    private void deleteCookie(HttpServletResponse response) {
+        Cookie cookie = new Cookie("friendId", null);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+    }
+
     private String rejectRegistration(BindingResult bindingResult) {
         String result;
         bindingResult.rejectValue("userName", "error.userAlreadyExists", "Username already exists.");
@@ -87,17 +94,17 @@ public class RegistrationController {
         return result;
     }
 
-    private String registerAndLogin(RegistrationRequest registrationRequest, String friendId, HttpServletRequest request) throws ServletException {
+    private String registerAndLogin(RegistrationRequest registrationRequest, Long friendId, HttpServletRequest request) throws ServletException {
         Long id = userService.registerUser(registrationRequest);
         addFriendIfNeeded(friendId, id);
         request.login(registrationRequest.getUserName(), registrationRequest.getPassword());
         return "redirect:index";
     }
 
-    private void addFriendIfNeeded(String friendId, Long id) {
+    private void addFriendIfNeeded(Long friendId, Long id) {
         log.info("friendId: " + friendId);
-        if (friendId.matches("[0-9]+")) {
-            userService.addFriend(Long.valueOf(friendId), id);
+        if (friendId != null) {
+            userService.addFriend(friendId, id);
         }
     }
 
