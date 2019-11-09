@@ -19,7 +19,7 @@
                         <tr>
                             <td><a href="<c:url value='/details?itemId=${watched.item.id}' />">${watched.item.title}</a></td>
                             <td>${watched.rating}</td>
-                            <td><a href="<c:url value='/deleteItem?itemId=${watched.item.id}' />">Delete</a></td>
+                            <td><a href="<c:url value='/deleteWatched?itemId=${watched.id}' />">Delete</a></td>
                         </tr>
                     </c:forEach>
                 </table>

@@ -46,14 +46,14 @@ public class WatchedService {
         return watchedDao.findAllByUserId(userId);
     }
 
-    public List<Item> getWatchedItems(Long userId) {
+    private List<Item> getWatchedItems(Long userId) {
         return watchedDao.findAllByUserId(userId).stream().map(Watched::getItem).collect(Collectors.toList());
     }
 
-    public void deleteWatched(User user, Long itemId) {
-        Item item = itemService.getItem(itemId);
-        user.deleteWatched(item);
-        watchedDao.deleteByItem(item);
+    public void deleteWatched(User user, Long watchedId) {
+        Watched watched = watchedDao.findById(watchedId).get();
+        user.deleteWatched(watched);
+        watchedDao.delete(watched);
         userService.saveUser(user);
     }
 

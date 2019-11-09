@@ -55,8 +55,8 @@ public class User {
             .setRating(watched.getRating());
     }
 
-    public void deleteWatched(Item item) {
-        watched.removeIf(myWatched -> myWatched.getItem().equals(item));
+    public void deleteWatched(Watched watched) {
+        this.watched.remove(watched);
     }
 
     @Override

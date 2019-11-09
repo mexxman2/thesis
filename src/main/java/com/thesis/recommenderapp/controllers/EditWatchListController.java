@@ -27,10 +27,10 @@ public class EditWatchListController {
         return "redirect:watch_list?page=1";
     }
 
-    @RequestMapping("deleteItem")
-    public String deleteItemFromWatchList(@RequestParam Long itemId, Principal principal) {
+    @RequestMapping("deleteWatched")
+    public String deleteItemFromWatchList(@RequestParam Long watchedId, Principal principal) {
         User user = userService.getUserByUserName(principal.getName());
-        watchedService.deleteWatched(user, itemId);
+        watchedService.deleteWatched(user, watchedId);
         return "redirect:watch_list";
     }
 
