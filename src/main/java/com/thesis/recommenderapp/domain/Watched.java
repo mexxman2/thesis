@@ -1,5 +1,6 @@
 package com.thesis.recommenderapp.domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -17,7 +18,7 @@ public class Watched {
     private Long id;
     @ManyToOne
     private User user;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Item item;
     private Integer rating;
 
