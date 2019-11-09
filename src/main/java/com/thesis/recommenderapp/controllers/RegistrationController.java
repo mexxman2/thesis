@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -23,6 +24,7 @@ import com.thesis.recommenderapp.service.UserService;
 import com.thesis.recommenderapp.service.exceptions.UsernameAlreadyExistsException;
 
 @Controller
+@Slf4j
 public class RegistrationController {
 
     @Autowired
@@ -93,6 +95,7 @@ public class RegistrationController {
     }
 
     private void addFriendIfNeeded(String friendId, Long id) {
+        log.info("friendId: " + friendId);
         if (friendId.matches("[0-9]+")) {
             userService.addFriend(Long.valueOf(friendId), id);
         }
