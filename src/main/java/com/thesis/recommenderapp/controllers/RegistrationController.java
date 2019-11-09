@@ -88,10 +88,8 @@ public class RegistrationController {
     }
 
     private String rejectRegistration(BindingResult bindingResult) {
-        String result;
         bindingResult.rejectValue("userName", "error.userAlreadyExists", "Username already exists.");
-        result = "register";
-        return result;
+        return "register";
     }
 
     private String registerAndLogin(RegistrationRequest registrationRequest, Long friendId, HttpServletRequest request) throws ServletException {
