@@ -6,7 +6,6 @@
 <c:choose>
     <c:when test="${empty items}">
         <p>No items found</p>
-        <a href="<c:url value='/upload' />">Want to add an item?</a>
     </c:when>
     <c:otherwise>
         <c:forEach var="item" items="${items}">
@@ -14,6 +13,9 @@
         </c:forEach>
     </c:otherwise>
 </c:choose>
+<p>
+    <a href="<c:url value='/upload' />">Want to add an item?</a>
+</p>
 <br>
 <h3>Users</h3>
 <c:choose>
