@@ -1,13 +1,13 @@
 package com.thesis.recommenderapp.domain;
 
+import lombok.Data;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-
-import lombok.Data;
 
 @Entity
 @Data
@@ -18,7 +18,7 @@ public class Watched {
     private Long id;
     @ManyToOne
     private User user;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Item item;
     private Integer rating;
 
