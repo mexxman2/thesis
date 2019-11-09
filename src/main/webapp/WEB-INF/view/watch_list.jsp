@@ -19,14 +19,14 @@
                         <tr>
                             <td><a href="<c:url value='/details?itemId=${watched.item.id}' />">${watched.item.title}</a></td>
                             <td>${watched.rating}</td>
-                            <td><a href="<c:url value='/deleteWatched?watchedId=${watched.id}' />">Delete</a></td>
+                            <td><a href="<c:url value='/deleteWatched?watchedId=${watched.id}&page=${prevPage+1}' />">Delete</a></td>
                         </tr>
                     </c:forEach>
                 </table>
-                <c:if test="${isPrev}">
+                <c:if test="${hasPrev}">
                     <a href="<c:url value='/watch_list?page=${prevPage}' />">Previous</a>
                 </c:if>
-                <c:if test="${isNext}">
+                <c:if test="${hasNext}">
                     <a href="<c:url value='/watch_list?page=${nextPage}' />">Next</a>
                 </c:if>
             </c:otherwise>
@@ -60,10 +60,10 @@
                         </tr>
                     </c:forEach>
                 </table>
-                <c:if test="${isPrev}">
+                <c:if test="${hasPrev}">
                     <a href="<c:url value='/watch_list?userId=${user.id}&page=${prevPage}' />">Previous</a>
                 </c:if>
-                <c:if test="${isNext}">
+                <c:if test="${hasNext}">
                     <a href="<c:url value='/watch_list?userId=${user.id}&page=${nextPage}' />">Next</a>
                 </c:if>
             </c:otherwise>

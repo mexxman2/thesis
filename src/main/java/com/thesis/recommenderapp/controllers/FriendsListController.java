@@ -89,8 +89,8 @@ public class FriendsListController {
         }
         model.addAttribute("prevPage", page - 1);
         model.addAttribute("nextPage", page + 1);
-        model.addAttribute("isNext", (page * 10) < friends.size());
-        model.addAttribute("isPrev", page > 1);
+        model.addAttribute("hasNext", (page * 10) < friends.size());
+        model.addAttribute("hasPrev", page > 1);
     }
 
 }

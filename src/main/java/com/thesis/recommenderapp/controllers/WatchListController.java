@@ -1,24 +1,19 @@
 package com.thesis.recommenderapp.controllers;
 
-import java.security.Principal;
-import java.util.List;
-import java.util.Set;
-
+import com.thesis.recommenderapp.domain.SearchString;
+import com.thesis.recommenderapp.domain.User;
 import com.thesis.recommenderapp.domain.Watched;
+import com.thesis.recommenderapp.service.UserService;
+import com.thesis.recommenderapp.service.WatchedService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.thesis.recommenderapp.domain.AddToWatchListItem;
-import com.thesis.recommenderapp.domain.Item;
-import com.thesis.recommenderapp.domain.SearchString;
-import com.thesis.recommenderapp.domain.User;
-import com.thesis.recommenderapp.service.UserService;
-import com.thesis.recommenderapp.service.WatchedService;
+import java.security.Principal;
+import java.util.List;
 
 @Controller
 public class WatchListController {
@@ -66,8 +61,8 @@ public class WatchListController {
         }
         model.addAttribute("prevPage", page - 1);
         model.addAttribute("nextPage", page + 1);
-        model.addAttribute("isNext", (page * 10) < watchedList.size());
-        model.addAttribute("isPrev", page > 1);
+        model.addAttribute("hasNext", (page * 10) < watchedList.size());
+        model.addAttribute("hasPrev", page > 1);
     }
 
 }
