@@ -33,19 +33,19 @@ public class RegistrationController {
         return new RegistrationRequest();
     }
 
-    @RequestMapping(value = "register")
+    /*@RequestMapping(value = "register")
     public String registerForm() {
         return isAuthenticated() ? "redirect:index" : "register";
-    }
+    }*/
 
-    @RequestMapping(value = "register", params = "friendId")
+    @RequestMapping("register")
     public String registerFriendForm(@RequestParam String friendId, HttpServletResponse response) {
         return isAuthenticated() ? "redirect:index" : addCookieAndShowPage(response, friendId);
     }
 
     @RequestMapping(value = "registerUserPost", method = RequestMethod.POST)
     public String registerPost(@ModelAttribute("registerUser") @Valid RegistrationRequest registrationRequest,
-                               BindingResult bindingResult, @CookieValue(name = "friendId", defaultValue = "noId") String friendId, HttpServletRequest request) {
+                               BindingResult bindingResult, @CookieValue(name = "friendId", defaultValue = "") String friendId, HttpServletRequest request) {
         String result;
         if (bindingResult.hasErrors()) {
             result = "register";
@@ -93,7 +93,7 @@ public class RegistrationController {
     }
 
     private void addFriendIfNeeded(String friendId, Long id) {
-        if (!friendId.equals("noId")) {
+        if (friendId.matches("[0-9]+")) {
             userService.addFriend(Long.valueOf(friendId), id);
         }
     }
