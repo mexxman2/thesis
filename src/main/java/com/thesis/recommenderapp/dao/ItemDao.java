@@ -1,12 +1,13 @@
 package com.thesis.recommenderapp.dao;
 
+import com.thesis.recommenderapp.domain.Item;
 import org.springframework.data.repository.CrudRepository;
 
-import com.thesis.recommenderapp.domain.Item;
+import java.util.List;
 
 public interface ItemDao extends CrudRepository<Item, Long> {
 
-    Iterable<Item> findAllByTitleContainingIgnoreCase(String substring);
+    List<Item> findAllByTitleContainingIgnoreCase(String substring);
 
     boolean existsByImdbId(String imdbId);
 

@@ -2,6 +2,8 @@ package com.thesis.recommenderapp.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,10 +42,12 @@ public class WatchedService {
         userService.saveUser(user);
     }
 
+    public List<Watched> getWatchedList(Long userId) {
+        return watchedDao.findAllByUserId(userId);
+    }
+
     public List<Item> getWatchedItems(Long userId) {
-        List<Item> result = new ArrayList<>();
-        watchedDao.findAllByUserId(userId).forEach(watched -> result.add(watched.getItem()));
-        return result;
+        return watchedDao.findAllByUserId(userId).stream().map(Watched::getItem).collect(Collectors.toList());
     }
 
     public void deleteWatched(User user, Long itemId) {

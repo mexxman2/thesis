@@ -2,7 +2,9 @@ package com.thesis.recommenderapp.controllers;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Set;
 
+import com.thesis.recommenderapp.domain.Watched;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,8 +36,8 @@ public class WatchListController {
     @RequestMapping(value = "watch_list", params = "page")
     public String watchList(Model model, @RequestParam Integer page, Principal principal) {
         User user = userService.getUserByUserName(principal.getName());
-        List<Item> watchedItems = watchedService.getWatchedItems(user.getId());
-        addAttributes(model, page, watchedItems);
+        List<Watched> watchedList = watchedService.getWatchedList(user.getId());
+        addAttributes(model, page, watchedList);
         return "watch_list";
     }
 
@@ -43,9 +45,9 @@ public class WatchListController {
     public String otherUserWatchList(Model model, @RequestParam Long userId, @RequestParam Integer page, Principal principal) {
         User user = userService.getUser(userId);
         User currentUser = userService.getUserByUserName(principal.getName());
-        List<Item> watchedItems = watchedService.getWatchedItems(user.getId());
+        List<Watched> watchedList = watchedService.getWatchedList(user.getId());
         addUserAttributesIfNotSameAsCurrentUser(model, user, currentUser);
-        addAttributes(model, page, watchedItems);
+        addAttributes(model, page, watchedList);
         return "watch_list";
     }
 
@@ -56,15 +58,15 @@ public class WatchListController {
         }
     }
 
-    private void addAttributes(Model model, Integer page, List<Item> watchedItems) {
-        if (watchedItems.size() > page * 10) {
-            model.addAttribute("items", watchedItems.subList((page - 1) * 10, page * 10));
+    private void addAttributes(Model model, Integer page, List<Watched> watchedList) {
+        if (watchedList.size() > page * 10) {
+            model.addAttribute("items", watchedList.subList((page - 1) * 10, page * 10));
         } else {
-            model.addAttribute("items", watchedItems.subList((page - 1) * 10, watchedItems.size()));
+            model.addAttribute("items", watchedList.subList((page - 1) * 10, watchedList.size()));
         }
         model.addAttribute("prevPage", page - 1);
         model.addAttribute("nextPage", page + 1);
-        model.addAttribute("isNext", (page * 10) < watchedItems.size());
+        model.addAttribute("isNext", (page * 10) < watchedList.size());
         model.addAttribute("isPrev", page > 1);
     }
 

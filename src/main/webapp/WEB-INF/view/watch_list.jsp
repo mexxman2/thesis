@@ -10,10 +10,16 @@
             </c:when>
             <c:otherwise>
                 <table>
-                    <c:forEach var="item" items="${items}">
+                    <tr>
+                        <th>Title</th>
+                        <th>Rating</th>
+                        <th>Action</th>
+                    </tr>
+                    <c:forEach var="watched" items="${items}">
                         <tr>
-                            <td><a href="<c:url value='/details?itemId=${item.id}' />">${item.title}</a></td>
-                            <td><a href="<c:url value='/deleteItem?itemId=${item.id}' />">Delete</a></td>
+                            <td><a href="<c:url value='/details?itemId=${watched.item.id}' />">${watched.item.title}</a></td>
+                            <td>${watched.rating}</td>
+                            <td><a href="<c:url value='/deleteItem?itemId=${watched.item.id}' />">Delete</a></td>
                         </tr>
                     </c:forEach>
                 </table>
@@ -43,9 +49,14 @@
             </c:when>
             <c:otherwise>
                 <table>
-                    <c:forEach var="item" items="${items}">
+                    <tr>
+                        <th>Title</th>
+                        <th>Rating</th>
+                    </tr>
+                    <c:forEach var="watched" items="${items}">
                         <tr>
-                            <td><a href="<c:url value='/details?itemId=${item.id}' />">${item.title}</a></td>
+                            <td><a href="<c:url value='/details?itemId=${watched.item.id}' />">${watched.item.title}</a></td>
+                            <td>${watched.rating}</td>
                         </tr>
                     </c:forEach>
                 </table>

@@ -77,7 +77,7 @@ public class ItemUploadController {
     }
 
     private String createMessage(ShouldBeMoreSpecificException e) {
-        return "Did you mean: " + e.getMessage() + "? Then click this button. Otherwise please add a more specific title.";
+        return "Did you mean: " + e.getMessage() + "? Then click the confirm button below. Otherwise please add a more specific title.";
     }
 
 }

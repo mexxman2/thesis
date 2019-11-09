@@ -1,12 +1,13 @@
 package com.thesis.recommenderapp.dao;
 
+import com.thesis.recommenderapp.domain.User;
 import org.springframework.data.repository.CrudRepository;
 
-import com.thesis.recommenderapp.domain.User;
+import java.util.List;
 
 public interface UserDao extends CrudRepository<User, Long> {
 
-    Iterable<User> findAllByUserNameContainingIgnoreCase(String substring);
+    List<User> findAllByUserNameContainingIgnoreCase(String substring);
 
     User findByUserName(String userName);
 

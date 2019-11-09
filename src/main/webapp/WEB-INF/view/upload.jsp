@@ -7,10 +7,10 @@
 
 <form:form modelAttribute="uploadItem" action="uploadItemPost">
     <spring:bind path="titleOrURL">
-        <form:errors path="*" element="div" cssClass="validation-error" />
         <p>
             <label for="input_title_or_url">Imdb title or URL</label>
             <form:input path="titleOrURL" id="input_title_or_url" />
+            <form:errors path="*" element="div" cssClass="validation-error" />
         </p>
         <c:if test="${status.error}">
             <p>
