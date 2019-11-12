@@ -5,7 +5,8 @@
         <label for="search_bar">Search item or user</label>
         <form:input path="searchSubstring" id="search_bar" />
     </p>
-    <p>
-        <button type=submit>Search</button>
-    </p>
+    <div class="btn-group">
+        <input type="submit" value="Search item" name="itemSearch" class="btn btn-primary">
+        <input type="submit" value="Search user" name="userSearch" class="btn btn-primary">
+    </div>
 </form:form>

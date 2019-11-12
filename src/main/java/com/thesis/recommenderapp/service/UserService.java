@@ -1,16 +1,18 @@
 package com.thesis.recommenderapp.service;
 
-import java.util.Set;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.thesis.recommenderapp.dao.UserDao;
 import com.thesis.recommenderapp.domain.RegistrationRequest;
 import com.thesis.recommenderapp.domain.User;
 import com.thesis.recommenderapp.service.exceptions.UsernameAlreadyExistsException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional
@@ -29,12 +31,13 @@ public class UserService {
         return userDao.findByUserName(name);
     }
 
-    public Iterable<User> getUsersBySubstring(String substring) {
-        return userDao.findAllByUserNameContainingIgnoreCase(substring);
+    public Page<User> getUsersBySubstring(String substring, Pageable pageable) {
+        return userDao.findAllByUserNameContainingIgnoreCase(substring, pageable);
     }
 
-    public Set<User> getFriends(String name) {
-        return userDao.findByUserName(name).getFriends();
+    public Page<User> getFriends(String name, Pageable pageable) {
+        List<User> friends = userDao.findByUserName(name).getFriends();
+        return new PageImpl<>(friends, pageable, friends.size());
     }
 
     public Long saveUser(User user) {

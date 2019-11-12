@@ -11,10 +11,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Table(name = "reco_user")
@@ -34,7 +32,7 @@ public class User {
     @OneToMany
     private List<Watched> watched = new ArrayList<>();
     @ManyToMany
-    private Set<User> friends = new HashSet<>();
+    private List<User> friends = new ArrayList<>();
 
     public void addToWatched(Watched watch) {
         watched.add(watch);

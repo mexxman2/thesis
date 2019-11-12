@@ -12,6 +12,10 @@ import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -45,9 +49,10 @@ public class FriendsListController {
     }
 
     @RequestMapping("friends_list")
-    public String friendsList(Model model, @RequestParam Integer page, Principal principal) {
-        Set<User> friends = userService.getFriends(principal.getName());
-        addAttributes(model, page, new ArrayList<>(friends));
+    public String friendsList(Model model, @RequestParam Integer page, Principal principal,
+                              @PageableDefault(sort = "userName", direction = Sort.Direction.ASC) Pageable pageable) {
+        Page<User> friends = userService.getFriends(principal.getName(), pageable);
+        model.addAttribute("friendPage", friends);
         return "friends_list";
     }
 
@@ -79,18 +84,6 @@ public class FriendsListController {
                 .build()
                 .toUriString();
         emailSenderService.sendInvite(email.getEmail(), user, baseUrl);
-    }
-
-    private void addAttributes(Model model, Integer page, List<User> friends) {
-        if (friends.size() > page * 10) {
-            model.addAttribute("friends", friends.subList((page - 1) * 10, page * 10));
-        } else {
-            model.addAttribute("friends", friends.subList((page - 1) * 10, friends.size()));
-        }
-        model.addAttribute("prevPage", page - 1);
-        model.addAttribute("nextPage", page + 1);
-        model.addAttribute("hasNext", (page * 10) < friends.size());
-        model.addAttribute("hasPrev", page > 1);
     }
 
 }

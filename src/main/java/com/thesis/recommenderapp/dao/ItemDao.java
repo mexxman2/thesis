@@ -1,13 +1,13 @@
 package com.thesis.recommenderapp.dao;
 
 import com.thesis.recommenderapp.domain.Item;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
+public interface ItemDao extends JpaRepository<Item, Long> {
 
-public interface ItemDao extends CrudRepository<Item, Long> {
-
-    List<Item> findAllByTitleContainingIgnoreCase(String substring);
+    Page<Item> findAllByTitleContainingIgnoreCase(String substring, Pageable pageable);
 
     boolean existsByImdbId(String imdbId);
 

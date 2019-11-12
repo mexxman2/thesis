@@ -14,6 +14,9 @@
         <p>Number of seasons: ${item.totalSeasons}</p>
     </c:otherwise>
 </c:choose>
+<p>Release date: {item.year}</p>
+<p>Genres: {item.genre}</p>
+<p>imdb rating: {item.imdbRating}</p>
 
 <form:form modelAttribute="addToWatchListItem" action="addToWatchList" method="post">
     <form:hidden path="itemId" value="${item.id}" />

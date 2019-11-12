@@ -5,6 +5,8 @@ import com.thesis.recommenderapp.domain.Item;
 import com.thesis.recommenderapp.domain.UploadItemRequest;
 import com.thesis.recommenderapp.service.exceptions.ImdbException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,8 +29,8 @@ public class ItemService {
         return itemDao.findById(id).get();
     }
 
-    public Iterable<Item> getItemsBySubstring(String substring) {
-        return itemDao.findAllByTitleContainingIgnoreCase(substring);
+    public Page<Item> getItemsBySubstring(String substring, Pageable pageable) {
+        return itemDao.findAllByTitleContainingIgnoreCase(substring, pageable);
     }
 
     public Long saveItem(UploadItemRequest uploadItemRequest) {
