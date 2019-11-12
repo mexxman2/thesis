@@ -28,4 +28,11 @@
             </li>
         </sec:authorize>
     </ul>
+    <form:form modelAttribute="searchString" action="searchBySubstring" method="post" class="form-inline my-2 my-lg-0">
+        <form:input class="form-control mr-sm-2" path="searchSubstring" id="search_bar" placeholder="Search item or user" aria-label="Search" />
+        <div class="btn-group">
+            <input type="submit" value="Search item" name="itemSearch" class="btn btn-outline-success my-2 my-sm-0">
+            <input type="submit" value="Search user" name="userSearch" class="btn btn-outline-success my-2 my-sm-0">
+        </div>
+    </form:form>
 </nav>
