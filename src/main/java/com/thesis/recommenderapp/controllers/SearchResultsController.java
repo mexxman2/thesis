@@ -5,6 +5,7 @@ import com.thesis.recommenderapp.domain.SearchString;
 import com.thesis.recommenderapp.domain.User;
 import com.thesis.recommenderapp.service.ItemService;
 import com.thesis.recommenderapp.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
+@Slf4j
 public class SearchResultsController {
 
     @Autowired
@@ -38,6 +40,7 @@ public class SearchResultsController {
         String result = "";
         if (itemSearch != null) {
             result = "redirect:searchItem/" + searchString.getSearchSubstring();
+            log.info(searchString.getSearchSubstring());
         } else if (userSearch != null) {
             result = "redirect:searchUser/" + searchString.getSearchSubstring();
         }
@@ -48,7 +51,9 @@ public class SearchResultsController {
     public String searchItem(Model model,
                              @PathVariable("substring") String substring,
                              @PageableDefault(sort = "title", direction = Sort.Direction.ASC) Pageable itemPageable) {
+        log.info(substring);
         Page<Item> itemPage = itemService.getItemsBySubstring(substring, itemPageable);
+        log.info(itemPage.getContent().toString());
         model.addAttribute("items", itemPage.getContent());
         model.addAttribute("substring", substring);
         model.addAttribute("totalPages", itemPage.getTotalPages());
