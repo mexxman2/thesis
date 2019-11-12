@@ -14,7 +14,7 @@
     <sec:authorize access="isAuthenticated()">
         <a class="nav-link" href="<c:url value='/logout' />">Logout</a>
     </sec:authorize>
-    <form:form modelAttribute="searchString" action="searchBySubstring" method="post" class="form-inline my-2 my-lg-0">
+    <form:form modelAttribute="searchString" action="searchBySubstring" method="post" class="form-inline my-2 my-lg-0 float-right">
         <form:input class="form-control mr-sm-2" path="searchSubstring" id="search_bar" placeholder="Search item or user" aria-label="Search" />
         <div class="btn-group">
             <input type="submit" value="Search item" name="itemSearch" class="btn btn-outline-success my-2 my-sm-0">
