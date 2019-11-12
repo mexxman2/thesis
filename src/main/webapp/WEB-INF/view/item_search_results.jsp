@@ -24,6 +24,9 @@
     </c:choose>
     <div class="row">
         <a href="<c:url value='/searchItem?substring=${substring}&page=${previous}' />">Previous</a>
+        <c:if test="${previous-1 ge 0}">
+                <a href="<c:url value='/searchItem?substring=${substring}&page=${previous-1}' />">${previous-1}</a>
+            </c:if>
         <c:if test="${previous lt current}">
             <a href="<c:url value='/searchItem?substring=${substring}&page=${previous}' />">${previous}</a>
         </c:if>
@@ -37,6 +40,6 @@
         <c:if test="${next+2 lt totalPages}">
             <a href="<c:url value='/searchItem?substring=${substring}&page=${next+2}' />">${next+2}</a>
         </c:if>
-        <a href="<c:url value='/searchItem?substring=${substring}&page=${next}' />">Next</a>
+        <a href="<c:url value='/searchItem?substring=${substring}&page=${next lt totalPages ? next : current}' />">Next</a>
     </div>
 </div>
