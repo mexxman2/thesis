@@ -39,4 +39,5 @@
         </c:if>
         <a href="<c:url value='/searchItem?substring=${substring}&page=${next}' />">Next</a>
     </div>
+    ${totalPages}
 </div>
