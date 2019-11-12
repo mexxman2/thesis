@@ -44,9 +44,14 @@
         <put-attribute name="body" value="/WEB-INF/view/watch_list.jsp" />
     </definition>
 
-    <definition name="search_results" extends="mainLayout">
+    <definition name="item_search_results" extends="mainLayout">
         <put-attribute name="navigation_bar" value="/WEB-INF/layout/navigation_bar_with_search_bar.jsp" />
-        <put-attribute name="body" value="/WEB-INF/view/search_results.jsp" />
+        <put-attribute name="body" value="/WEB-INF/view/item_search_results.jsp" />
+    </definition>
+
+    <definition name="user_search_results" extends="mainLayout">
+        <put-attribute name="navigation_bar" value="/WEB-INF/layout/navigation_bar_with_search_bar.jsp" />
+        <put-attribute name="body" value="/WEB-INF/view/user_search_results.jsp" />
     </definition>
 
 </tiles-definitions>
