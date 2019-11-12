@@ -23,23 +23,27 @@
         </c:otherwise>
     </c:choose>
     <div class="row">
-        <a href="<c:url value='/searchItem?substring=${substring}&page=${previous}' />">Previous</a>
-        <c:if test="${previous-1 ge 0}">
-                <a href="<c:url value='/searchItem?substring=${substring}&page=${previous-1}' />">${previous-1}</a>
-            </c:if>
-        <c:if test="${previous lt current}">
-            <a href="<c:url value='/searchItem?substring=${substring}&page=${previous}' />">${previous}</a>
-        </c:if>
-        ${current}
-        <c:if test="${next lt totalPages}">
-            <a href="<c:url value='/searchItem?substring=${substring}&page=${next}' />">${next}</a>
-        </c:if>
-        <c:if test="${next+1 lt totalPages}">
-            <a href="<c:url value='/searchItem?substring=${substring}&page=${next+1}' />">${next+1}</a>
-        </c:if>
-        <c:if test="${next+2 lt totalPages}">
-            <a href="<c:url value='/searchItem?substring=${substring}&page=${next+2}' />">${next+2}</a>
-        </c:if>
-        <a href="<c:url value='/searchItem?substring=${substring}&page=${next lt totalPages ? next : current}' />">Next</a>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="<c:url value='/searchItem?substring=${substring}&page=${previous}' />">Previous</a></li>
+                <c:if test="${previous-1 ge 0}">
+                    <li class="page-item"><a class="page-link" href="<c:url value='/searchItem?substring=${substring}&page=${previous-1}' />">${previous-1}</a></li>
+                </c:if>
+                <c:if test="${previous lt current}">
+                    <li class="page-item"><a class="page-link" href="<c:url value='/searchItem?substring=${substring}&page=${previous}' />">${previous}</a></li>
+                </c:if>
+                <li class="page-item">${current}</li>
+                <c:if test="${next lt totalPages}">
+                    <li class="page-item"><a class="page-link" href="<c:url value='/searchItem?substring=${substring}&page=${next}' />">${next}</a></li>
+                </c:if>
+                <c:if test="${next+1 lt totalPages}">
+                    <li class="page-item"><a class="page-link" href="<c:url value='/searchItem?substring=${substring}&page=${next+1}' />">${next+1}</a></li>
+                </c:if>
+                <c:if test="${next+2 lt totalPages}">
+                    <li class="page-item"><a class="page-link" href="<c:url value='/searchItem?substring=${substring}&page=${next+2}' />">${next+2}</a></li>
+                </c:if>
+                <li class="page-item"><a class="page-link" href="<c:url value='/searchItem?substring=${substring}&page=${next lt totalPages ? next : current}' />">Next</a></li>
+            </ul>
+        </nav>
     </div>
 </div>
