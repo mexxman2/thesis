@@ -11,45 +11,38 @@
 
     <definition name="register" extends="mainLayout">
         <put-attribute name="body" value="/WEB-INF/view/register.jsp" />
-        <put-attribute name="body2" value="" />
     </definition>
 
     <definition name="login" extends="mainLayout">
         <put-attribute name="body" value="/WEB-INF/view/login.jsp" />
-        <put-attribute name="body2" value="" />
     </definition>
 
-    <definition name="withSearch" extends="mainLayout">
-        <put-attribute name="body" value="/WEB-INF/layout/search_bar.jsp" />
-        <put-attribute name="body2" value="" />
+    <definition name="details" extends="mainLayout">
+        <put-attribute name="body" value="/WEB-INF/view/details.jsp" />
     </definition>
 
-    <definition name="details" extends="withSearch">
-        <put-attribute name="body2" value="/WEB-INF/view/details.jsp" />
+    <definition name="index" extends="mainLayout">
+        <put-attribute name="body" value="/WEB-INF/view/index.jsp" />
     </definition>
 
-    <definition name="index" extends="withSearch">
-        <put-attribute name="body2" value="/WEB-INF/view/index.jsp" />
+    <definition name="upload" extends="mainLayout">
+        <put-attribute name="body" value="/WEB-INF/view/upload.jsp" />
     </definition>
 
-    <definition name="upload" extends="withSearch">
-        <put-attribute name="body2" value="/WEB-INF/view/upload.jsp" />
+    <definition name="friends_list" extends="mainLayout">
+        <put-attribute name="body" value="/WEB-INF/view/friends_list.jsp" />
     </definition>
 
-    <definition name="friends_list" extends="withSearch">
-        <put-attribute name="body2" value="/WEB-INF/view/friends_list.jsp" />
+    <definition name="watch_list" extends="mainLayout">
+        <put-attribute name="body" value="/WEB-INF/view/watch_list.jsp" />
     </definition>
 
-    <definition name="watch_list" extends="withSearch">
-        <put-attribute name="body2" value="/WEB-INF/view/watch_list.jsp" />
+    <definition name="item_search_results" extends="mainLayout">
+        <put-attribute name="body" value="/WEB-INF/view/item_search_results.jsp" />
     </definition>
 
-    <definition name="item_search_results" extends="withSearch">
-        <put-attribute name="body2" value="/WEB-INF/view/item_search_results.jsp" />
-    </definition>
-
-    <definition name="user_search_results" extends="withSearch">
-        <put-attribute name="body2" value="/WEB-INF/view/user_search_results.jsp" />
+    <definition name="user_search_results" extends="mainLayout">
+        <put-attribute name="body" value="/WEB-INF/view/user_search_results.jsp" />
     </definition>
 
 </tiles-definitions>
