@@ -13,7 +13,6 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,16 +36,16 @@ public class SearchResultsController {
                                     @RequestParam(required = false, value = "userSearch") String userSearch) {
         String result = "";
         if (itemSearch != null) {
-            result = "redirect:searchItem/" + searchString.getSearchSubstring();
+            result = "redirect:searchItem?substring=" + searchString.getSearchSubstring();
         } else if (userSearch != null) {
-            result = "redirect:searchUser/" + searchString.getSearchSubstring();
+            result = "redirect:searchUser?substring=" + searchString.getSearchSubstring();
         }
         return result;
     }
 
-    @RequestMapping(value = "searchItem/{substring}")
+    @RequestMapping(value = "searchItem")
     public String searchItem(Model model,
-                             @PathVariable("substring") String substring,
+                             @RequestParam("substring") String substring,
                              @PageableDefault(sort = "title", direction = Sort.Direction.ASC) Pageable itemPageable) {
         Page<Item> itemPage = itemService.getItemsBySubstring(substring, itemPageable);
         model.addAttribute("items", itemPage.getContent());
@@ -58,9 +57,9 @@ public class SearchResultsController {
         return "item_search_results";
     }
 
-    @RequestMapping(value = "searchUser/{substring}")
+    @RequestMapping(value = "searchUser")
     public String searchUser(Model model,
-                             @PathVariable("substring") String substring,
+                             @RequestParam("substring") String substring,
                              @PageableDefault(sort = "userName", direction = Sort.Direction.ASC) Pageable userPageable) {
         Page<User> userPage = userService.getUsersBySubstring(substring, userPageable);
         model.addAttribute("users", userPage.getContent());

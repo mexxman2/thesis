@@ -8,35 +8,35 @@
     <div class="row">
         <p><a href="<c:url value='/upload' />">Want to add an item?</a></p>
     </div>
-    <div class="row">
-        <c:choose>
-            <c:when test="${empty items}">
+    <c:choose>
+        <c:when test="${empty items}">
+            <div class="row">
                 <p>No items found</p>
-            </c:when>
-            <c:otherwise>
-                <c:forEach var="item" items="${items}">
-                    <div class="row">
-                        <a href="<c:url value='/details?itemId=${item.id}' />">${item.title}</a>
-                    </div>
-                </c:forEach>
-            </c:otherwise>
-        </c:choose>
-    </div>
+            </div>
+        </c:when>
+        <c:otherwise>
+            <c:forEach var="item" items="${items}">
+                <div class="row">
+                    <a href="<c:url value='/details?itemId=${item.id}' />">${item.title}</a>
+                </div>
+            </c:forEach>
+        </c:otherwise>
+    </c:choose>
     <div class="row">
-        <a href="<c:url value='/itemSearch/${substring}?page=${previous}&size=10' />">Previous</a>
+        <a href="<c:url value='/itemSearch?substring=${substring}&page=${previous}' />">Previous</a>
         <c:if test="${previous lt current}">
-            <a href="<c:url value='/itemSearch/${substring}?page=${previous}&size=10' />">${previous}</a>
+            <a href="<c:url value='/itemSearch?substring=${substring}&page=${previous}' />">${previous}</a>
         </c:if>
         ${current}
         <c:if test="${next le totalPages}">
-            <a href="<c:url value='/itemSearch/${substring}?page=${next}&size=10' />">${next}</a>
+            <a href="<c:url value='/itemSearch?substring=${substring}&page=${next}' />">${next}</a>
         </c:if>
         <c:if test="${next+1 le totalPages}">
-            <a href="<c:url value='/itemSearch/${substring}?page=${next+1}&size=10' />">${next+1}</a>
+            <a href="<c:url value='/itemSearch?substring=${substring}&page=${next+1}' />">${next+1}</a>
         </c:if>
         <c:if test="${next+2 le totalPages}">
-            <a href="<c:url value='/itemSearch/${substring}?page=${next+2}&size=10' />">${next+2}</a>
+            <a href="<c:url value='/itemSearch?substring=${substring}&page=${next+2}' />">${next+2}</a>
         </c:if>
-        <a href="<c:url value='/itemSearch/${substring}?page=${next}&size=10' />">Next</a>
+        <a href="<c:url value='/itemSearch?substring=${substring}&page=${next}' />">Next</a>
     </div>
 </div>
