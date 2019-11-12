@@ -28,16 +28,15 @@
             <a href="<c:url value='/searchItem?substring=${substring}&page=${previous}' />">${previous}</a>
         </c:if>
         ${current}
-        <c:if test="${next le totalPages}">
+        <c:if test="${next lt totalPages}">
             <a href="<c:url value='/searchItem?substring=${substring}&page=${next}' />">${next}</a>
         </c:if>
-        <c:if test="${next+1 le totalPages}">
+        <c:if test="${next+1 lt totalPages}">
             <a href="<c:url value='/searchItem?substring=${substring}&page=${next+1}' />">${next+1}</a>
         </c:if>
-        <c:if test="${next+2 le totalPages}">
+        <c:if test="${next+2 lt totalPages}">
             <a href="<c:url value='/searchItem?substring=${substring}&page=${next+2}' />">${next+2}</a>
         </c:if>
         <a href="<c:url value='/searchItem?substring=${substring}&page=${next}' />">Next</a>
     </div>
-    ${totalPages}
 </div>
