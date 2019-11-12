@@ -23,20 +23,20 @@
         </c:otherwise>
     </c:choose>
     <div class="row">
-        <a href="<c:url value='/itemSearch?substring=${substring}&page=${previous}' />">Previous</a>
+        <a href="<c:url value='/searchItem?substring=${substring}&page=${previous}' />">Previous</a>
         <c:if test="${previous lt current}">
-            <a href="<c:url value='/itemSearch?substring=${substring}&page=${previous}' />">${previous}</a>
+            <a href="<c:url value='/searchItem?substring=${substring}&page=${previous}' />">${previous}</a>
         </c:if>
         ${current}
         <c:if test="${next le totalPages}">
-            <a href="<c:url value='/itemSearch?substring=${substring}&page=${next}' />">${next}</a>
+            <a href="<c:url value='/searchItem?substring=${substring}&page=${next}' />">${next}</a>
         </c:if>
         <c:if test="${next+1 le totalPages}">
-            <a href="<c:url value='/itemSearch?substring=${substring}&page=${next+1}' />">${next+1}</a>
+            <a href="<c:url value='/searchItem?substring=${substring}&page=${next+1}' />">${next+1}</a>
         </c:if>
         <c:if test="${next+2 le totalPages}">
-            <a href="<c:url value='/itemSearch?substring=${substring}&page=${next+2}' />">${next+2}</a>
+            <a href="<c:url value='/searchItem?substring=${substring}&page=${next+2}' />">${next+2}</a>
         </c:if>
-        <a href="<c:url value='/itemSearch?substring=${substring}&page=${next}' />">Next</a>
+        <a href="<c:url value='/searchItem?substring=${substring}&page=${next}' />">Next</a>
     </div>
 </div>
