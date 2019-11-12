@@ -46,7 +46,7 @@ public class SearchResultsController {
     @RequestMapping(value = "searchItem")
     public String searchItem(Model model,
                              @RequestParam("substring") String substring,
-                             @PageableDefault(sort = "title", direction = Sort.Direction.ASC) Pageable itemPageable) {
+                             @PageableDefault(page = 0, size = 10, sort = "title", direction = Sort.Direction.ASC) Pageable itemPageable) {
         Page<Item> itemPage = itemService.getItemsBySubstring(substring, itemPageable);
         model.addAttribute("items", itemPage.getContent());
         model.addAttribute("substring", substring);
