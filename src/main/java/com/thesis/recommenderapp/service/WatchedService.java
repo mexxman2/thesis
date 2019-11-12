@@ -6,6 +6,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,8 +44,8 @@ public class WatchedService {
         userService.saveUser(user);
     }
 
-    public List<Watched> getWatchedList(Long userId) {
-        return watchedDao.findAllByUserId(userId);
+    public Page<Watched> getWatchedList(Long userId, Pageable pageable) {
+        return watchedDao.findAllByUserId(userId, pageable);
     }
 
     private List<Item> getWatchedItems(Long userId) {

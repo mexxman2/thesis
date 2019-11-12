@@ -6,6 +6,10 @@ import com.thesis.recommenderapp.domain.Watched;
 import com.thesis.recommenderapp.service.UserService;
 import com.thesis.recommenderapp.service.WatchedService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -29,20 +33,22 @@ public class WatchListController {
     }
 
     @RequestMapping(value = "watch_list", params = "page")
-    public String watchList(Model model, @RequestParam Integer page, Principal principal) {
+    public String watchList(Model model, @RequestParam Integer page, Principal principal,
+                            @PageableDefault(sort = "item.title", direction = Sort.Direction.ASC) Pageable watchedPageable) {
         User user = userService.getUserByUserName(principal.getName());
-        List<Watched> watchedList = watchedService.getWatchedList(user.getId());
-        addAttributes(model, page, watchedList);
+        Page<Watched> watchedList = watchedService.getWatchedList(user.getId(), watchedPageable);
+        addAttributes(model, page, watchedList.getContent());
         return "watch_list";
     }
 
     @RequestMapping(value = "watch_list", params = {"userId", "page"})
-    public String otherUserWatchList(Model model, @RequestParam Long userId, @RequestParam Integer page, Principal principal) {
+    public String otherUserWatchList(Model model, @RequestParam Long userId, @RequestParam Integer page, Principal principal,
+                                     @PageableDefault(sort = "item.title", direction = Sort.Direction.ASC) Pageable watchedPageable) {
         User user = userService.getUser(userId);
         User currentUser = userService.getUserByUserName(principal.getName());
-        List<Watched> watchedList = watchedService.getWatchedList(user.getId());
+        Page<Watched> watchedList = watchedService.getWatchedList(user.getId(), watchedPageable);
         addUserAttributesIfNotSameAsCurrentUser(model, user, currentUser);
-        addAttributes(model, page, watchedList);
+        addAttributes(model, page, watchedList.getContent());
         return "watch_list";
     }
 
