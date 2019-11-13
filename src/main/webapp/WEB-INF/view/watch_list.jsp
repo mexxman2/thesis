@@ -20,7 +20,7 @@
                             </c:otherwise>
                         </c:choose>
                         <c:choose>
-                            <c:when test="${sortBy != 'item.title' && sortDirection == 'ASC'}">
+                            <c:when test="${sortBy == 'rating' && sortDirection == 'ASC,item.title'}">
                                 <th><a class="btn btn-link" href="<c:url value='/watch_list?page=${current}&sort=rating,DESC&sort=item.title,ASC' />">Rating</a></th>
                             </c:when>
                             <c:otherwise>

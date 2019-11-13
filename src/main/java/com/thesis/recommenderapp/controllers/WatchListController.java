@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.security.Principal;
 
 @Controller
-@Slf4j
 public class WatchListController {
 
     @Autowired
@@ -39,8 +38,6 @@ public class WatchListController {
         User user = userService.getUserByUserName(principal.getName());
         Page<Watched> watchedPage = watchedService.getWatchedList(user.getId(), watchedPageable);
         String[] sortParts = watchedPageable.getSort().toString().split(":");
-        log.info(sortParts[0].trim());
-        log.info(sortParts[1].trim());
         model.addAttribute("sortBy", sortParts[0].trim());
         model.addAttribute("sortDirection", sortParts[1].trim());
         model.addAttribute("items", watchedPage.getContent());
