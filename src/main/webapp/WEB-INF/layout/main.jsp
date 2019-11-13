@@ -4,7 +4,7 @@
 <html>
     <head>
         <title>Recommendation</title>
-        <link rel="stylesheet" type="text/css" href="css/darkly-bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/darkly-bootstrap.min.css">
     </head>
     <body>
         <tiles:insertAttribute name="navigation_bar" />
