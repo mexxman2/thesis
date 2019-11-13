@@ -5,7 +5,7 @@
 <html>
     <head>
         <title>Recommendation</title>
-        <link href="<c:url value='../../resources/css/darkly-bootstrap.min.css' />" rel="stylesheet">
+        <link href="../../resources/css/darkly-bootstrap.min.css" rel="stylesheet">
     </head>
     <body>
         <tiles:insertAttribute name="navigation_bar" />
