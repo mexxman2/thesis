@@ -2,7 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <h1>Welcome</h1>
-<c:if test="${not empty recommended}"
+<c:if test="${not empty recommended}">
     <h2>Recommended to you</h2>
     <c:forEach var="item" items="${recommended}">
         <div class="row">
