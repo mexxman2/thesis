@@ -21,10 +21,10 @@
                         </c:choose>
                         <c:choose>
                             <c:when test="${sortBy == 'rating' && sortDirection == 'ASC'}">
-                                <th><a class="btn btn-link" href="<c:url value='/watch_list?page=${current}&sort=rating,DESC' />">Rating</a></th>
+                                <th><a class="btn btn-link" href="<c:url value='/watch_list?page=${current}&sort=rating,DESC&sort=item.title,ASC' />">Rating</a></th>
                             </c:when>
                             <c:otherwise>
-                                <th><a class="btn btn-link" href="<c:url value='/watch_list?page=${current}&sort=rating,ASC' />">Rating</a></th>
+                                <th><a class="btn btn-link" href="<c:url value='/watch_list?page=${current}&sort=rating,ASC&sort=item.title,ASC' />">Rating</a></th>
                             </c:otherwise>
                         </c:choose>
                         <th>Action</th>
@@ -92,10 +92,10 @@
                         </c:choose>
                         <c:choose>
                             <c:when test="${sortBy == 'rating' && sortDirection == 'ASC'}">
-                                <th><a class="btn btn-link" href="<c:url value='/watch_list?userId=${user.id}&page=${current}&sort=rating,DESC' />">Rating</a></th>
+                                <th><a class="btn btn-link" href="<c:url value='/watch_list?userId=${user.id}&page=${current}&sort=rating,DESC&sort=item.title,ASC' />">Rating</a></th>
                             </c:when>
                             <c:otherwise>
-                                <th><a class="btn btn-link" href="<c:url value='/watch_list?userId=${user.id}&page=${current}&sort=rating,ASC' />">Rating</a></th>
+                                <th><a class="btn btn-link" href="<c:url value='/watch_list?userId=${user.id}&page=${current}&sort=rating,ASC&sort=item.title,ASC' />">Rating</a></th>
                             </c:otherwise>
                         </c:choose>
                     </tr>
