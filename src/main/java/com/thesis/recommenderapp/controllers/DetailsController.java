@@ -31,6 +31,7 @@ public class DetailsController {
     public String details(Model model, @RequestParam Long itemId) {
         Item item = itemService.getItem(itemId);
         boolean isMovie = item.getClass().getSimpleName().equals("Movie");
+        item.setYear(item.getYear().replace("–", "-"));
         model.addAttribute("item", item);
         model.addAttribute("isMovie", isMovie);
         return "details";
