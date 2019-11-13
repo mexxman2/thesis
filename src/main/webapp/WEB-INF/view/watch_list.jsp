@@ -11,8 +11,16 @@
             <c:otherwise>
                 <table class="table">
                     <tr>
-                        <th><a class="btn btn-link" href="<c:url value='/watch_list?page=${current}&sort=item.title,${sortBy == 'item.title' && sortDirection == 'ASC' ? 'DESC' : 'ASC'}' />">Title</a></th>
-                        <th><a class="btn btn-link" href="<c:url value='/watch_list?page=${current}&sort=rating,${sortBy == rating && sortDirection == ASC ? DESC : ASC}' />">Rating</a></th>
+                        <c:choose>
+                            <c:when test="${sortBy == 'item.title' && sortDirection == 'ASC'}">
+                                <th><a class="btn btn-link" href="<c:url value='/watch_list?page=${current}&sort=item.title,DESC' />">Title</a></th>
+                                <th><a class="btn btn-link" href="<c:url value='/watch_list?page=${current}&sort=rating,ASC' />">Rating</a></th>
+                            </c:when>
+                            <c:otherwise>
+                                <th><a class="btn btn-link" href="<c:url value='/watch_list?page=${current}&sort=item.title,ASC' />">Title</a></th>
+                                <th><a class="btn btn-link" href="<c:url value='/watch_list?page=${current}&sort=rating,DESC' />">Rating</a></th>
+                            </c:otherwise>
+                        </c:choose>
                         <th>Action</th>
                     </tr>
                     <c:forEach var="watched" items="${items}">
@@ -68,11 +76,16 @@
             <c:otherwise>
                 <table class="table">
                     <tr>
-                        <th>
-                            <a class="btn btn-link" href="<c:url value='/watch_list?userId=${user.id}&page=${current}&sort=item.title,${sortBy == item.title && sortDirection == ASC ? DESC : ASC}' />">Title</a></th>
-                        <th>
-                            <a class="btn btn-link"href="<c:url value='/watch_list?userId=${user.id}&page=${current}&sort=rating,${sortBy == rating && sortDirection == ASC ? DESC : ASC}' />">Rating</a>
-                        </th>
+                        <c:choose>
+                            <c:when test="${sortBy == 'item.title' && sortDirection == 'ASC'}">
+                                <th><a class="btn btn-link" href="<c:url value='/watch_list?userId=${user.id}&page=${current}&sort=item.title,DESC' />">Title</a></th>
+                                <th><a class="btn btn-link" href="<c:url value='/watch_list?userId=${user.id}&page=${current}&sort=rating,ASC' />">Rating</a></th>
+                            </c:when>
+                            <c:otherwise>
+                                <th><a class="btn btn-link" href="<c:url value='/watch_list?userId=${user.id}&page=${current}&sort=item.title,ASC' />">Title</a></th>
+                                <th><a class="btn btn-link" href="<c:url value='/watch_list?userId=${user.id}&page=${current}&sort=rating,DESC' />">Rating</a></th>
+                            </c:otherwise>
+                        </c:choose>
                     </tr>
                     <c:forEach var="watched" items="${items}">
                         <tr>
