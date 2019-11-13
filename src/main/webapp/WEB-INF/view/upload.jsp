@@ -22,11 +22,11 @@
             <a class="btn btn-primary" href="<c:url value='/confirmUpload' />">Confirm</a>
         </c:if>
     </spring:bind>
-    <div class="form-row">
+    <div class="form-group row">
         <label for="movie">Movie</label>
         <form:radiobutton path="type" value="movie" id="movie" checked="checked"/>
     </div>
-    <div class="form-row">
+    <div class="form-group row">
         <label for="series">Series</label>
         <form:radiobutton path="type" value="series" id="series"/>
     </div>
