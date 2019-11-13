@@ -19,8 +19,8 @@
 <p>imdb rating: ${item.imdbRating}</p>
 
 <form:form modelAttribute="addToWatchListItem" action="addToWatchList" method="post">
-    <form:hidden path="itemId" value="${item.id}" />
-    <p>
+    <div class="form-group">
+        <form:hidden path="itemId" value="${item.id}" />
         <label for="rating">Rate it</label>
         <form:select path="rating" id="rating" class="form-control mx-sm-1">
             <form:option value="1" label="1"/>
@@ -34,8 +34,6 @@
             <form:option value="9" label="9"/>
             <form:option value="10" label="10"/>
         </form:select>
-    </p>
-    <p>
         <button type="submit" class="btn btn-primary">Add to list</button>
-    </p>
+    </div>
 </form:form>
