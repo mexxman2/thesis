@@ -11,7 +11,7 @@
             <c:otherwise>
                 <table class="table">
                     <tr>
-                        <th><a class="btn btn-link" href="<c:url value='/watch_list?page=${current}&sort=item.title,${sortDirection == ASC ? DESC : ASC}' />">Title</a></th>
+                        <th><a class="btn btn-link" href="<c:url value='/watch_list?page=${current}&sort=item.title,${sortBy == 'item.title' && sortDirection == 'ASC' ? 'DESC' : 'ASC'}' />">Title</a></th>
                         <th><a class="btn btn-link" href="<c:url value='/watch_list?page=${current}&sort=rating,${sortBy == rating && sortDirection == ASC ? DESC : ASC}' />">Rating</a></th>
                         <th>Action</th>
                     </tr>
