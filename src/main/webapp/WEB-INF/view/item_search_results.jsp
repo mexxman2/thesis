@@ -6,7 +6,7 @@
         <h2>Search results</h2>
     </div>
     <div class="row">
-        <p><a href="<c:url value='/upload' />">Want to add an item?</a></p>
+        <p><a href="<c:url value='/upload?substring=${substring}' />">Want to add an item?</a></p>
     </div>
     <c:choose>
         <c:when test="${empty items}">

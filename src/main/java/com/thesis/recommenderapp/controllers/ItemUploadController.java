@@ -7,11 +7,13 @@ import com.thesis.recommenderapp.service.exceptions.SearchReturnedErrorException
 import com.thesis.recommenderapp.service.exceptions.ShouldBeMoreSpecificException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -34,7 +36,8 @@ public class ItemUploadController {
     }
 
     @RequestMapping("upload")
-    public String upload() {
+    public String upload(Model model, @RequestParam(defaultValue = "") String substring) {
+        model.addAttribute("substring", substring);
         return "upload";
     }
 

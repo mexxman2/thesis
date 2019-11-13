@@ -12,7 +12,7 @@
                 <label for="input_title_or_url">Imdb title or URL</label>
             </div>
             <div class="col-sm-10">
-                <form:input path="titleOrURL" id="input_title_or_url" class="form-control" />
+                <form:input path="titleOrURL" id="input_title_or_url" class="form-control" value="${substring}" />
             </div>
         </div>
         <div class="form-group row">
