@@ -5,6 +5,7 @@ import com.thesis.recommenderapp.domain.User;
 import com.thesis.recommenderapp.domain.Watched;
 import com.thesis.recommenderapp.service.UserService;
 import com.thesis.recommenderapp.service.WatchedService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.security.Principal;
 
 @Controller
+@Slf4j
 public class WatchListController {
 
     @Autowired
@@ -37,6 +39,8 @@ public class WatchListController {
         User user = userService.getUserByUserName(principal.getName());
         Page<Watched> watchedPage = watchedService.getWatchedList(user.getId(), watchedPageable);
         String[] sortParts = watchedPageable.getSort().toString().split(":");
+        log.info(sortParts[0].trim());
+        log.info(sortParts[1].trim());
         model.addAttribute("sortBy", sortParts[0].trim());
         model.addAttribute("sortDirection", sortParts[1].trim());
         model.addAttribute("items", watchedPage.getContent());
