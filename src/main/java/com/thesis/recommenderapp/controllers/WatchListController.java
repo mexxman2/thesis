@@ -38,6 +38,7 @@ public class WatchListController {
         User user = userService.getUserByUserName(principal.getName());
         Page<Watched> watchedPage = watchedService.getWatchedList(user.getId(), watchedPageable);
         String[] sortParts = watchedPageable.getSort().toString().split(":");
+        watchedPage.getContent().forEach(watched -> watched.getItem().setYear(watched.getItem().getYear().replace("–", "-")));
         model.addAttribute("sortBy", sortParts[0].trim());
         model.addAttribute("sortDirection", sortParts[1].trim());
         model.addAttribute("items", watchedPage.getContent());
@@ -55,6 +56,7 @@ public class WatchListController {
         User currentUser = userService.getUserByUserName(principal.getName());
         Page<Watched> watchedPage = watchedService.getWatchedList(user.getId(), watchedPageable);
         String[] sortParts = watchedPageable.getSort().toString().split(":");
+        watchedPage.getContent().forEach(watched -> watched.getItem().setYear(watched.getItem().getYear().replace("–", "-")));
         addUserAttributesIfNotSameAsCurrentUser(model, user, currentUser);
         model.addAttribute("sortBy", sortParts[0].trim());
         model.addAttribute("sortDirection", sortParts[1].trim());
