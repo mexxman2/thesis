@@ -43,15 +43,13 @@
     </c:otherwise>
 </c:choose>
 
-<form:form modelAttribute="email" action="sendEmail" method="post">
-    <form:errors path="*" element="div" cssClass="validation-error" />
-    <p>
-        <label for="email">Invite friends by entering their email address:</label>
-        <form:input path="email" id="email" placeholder="Email address" />
-    </p>
-    <p>
-        <button type="submit">Send</button>
-    </p>
+<form:form modelAttribute="email" action="sendEmail" method="post" class="form-inline">
+    <div class="form-group">
+        <form:errors path="*" element="div" cssClass="validation-error" />
+        <label for="email">Invite friends by entering their email address: </label>
+        <form:input path="email" id="email" placeholder="Email address" class="form-control mx-sm-5" />
+        <button type="submit" class="btn btn-primary">Send</button>
+    </div>
 </form:form>
 <c:if test="${emailSent}">
     <p>Email sent</p>
