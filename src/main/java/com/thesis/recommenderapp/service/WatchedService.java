@@ -45,6 +45,10 @@ public class WatchedService {
         return watchedDao.findAllByUserId(userId, pageable);
     }
 
+    public Watched getWatched(User user, Item item) {
+        return watchedDao.findByUserAndItem(user, item);
+    }
+
     private List<Item> getWatchedItems(Long userId) {
         return watchedDao.findAllByUserId(userId).stream().map(Watched::getItem).collect(Collectors.toList());
     }
