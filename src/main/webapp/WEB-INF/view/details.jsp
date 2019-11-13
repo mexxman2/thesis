@@ -5,15 +5,7 @@
 <img src="${item.posterPath}" alt="Poster">
 <h2>${item.title}</h2>
 <p>${item.description}</p>
-<c:choose>
-    <c:when test="${isMovie}">
-        <p>Type: Movie</p>
-    </c:when>
-    <c:otherwise>
-        <p>Type: Series</p>
-        <p>Number of seasons: ${item.totalSeasons}</p>
-    </c:otherwise>
-</c:choose>
+<p>Type: ${item.type}</p>
 <p>Release date: ${item.year}</p>
 <p>Genres: ${item.genre}</p>
 <p>Runtime: ${item.runtime}</p>

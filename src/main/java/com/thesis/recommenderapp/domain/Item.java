@@ -1,6 +1,8 @@
 package com.thesis.recommenderapp.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -13,12 +15,10 @@ import javax.persistence.Inheritance;
 import java.util.Objects;
 
 @Entity
-@Inheritance
-@DiscriminatorColumn(name = "ITEM_TYPE")
 @Data
-@SuperBuilder
 @NoArgsConstructor
-public abstract class Item {
+@Builder
+public class Item {
 
     @Id
     @GeneratedValue
@@ -39,6 +39,8 @@ public abstract class Item {
     String imdbId;
     @JsonProperty("Poster")
     String posterPath;
+    @JsonProperty("Type")
+    String type;
 
     @Override
     public boolean equals(Object o) {

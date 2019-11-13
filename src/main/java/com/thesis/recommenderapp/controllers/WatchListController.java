@@ -1,11 +1,7 @@
 package com.thesis.recommenderapp.controllers;
 
-import com.thesis.recommenderapp.domain.SearchString;
-import com.thesis.recommenderapp.domain.User;
-import com.thesis.recommenderapp.domain.Watched;
-import com.thesis.recommenderapp.service.UserService;
-import com.thesis.recommenderapp.service.WatchedService;
-import lombok.extern.slf4j.Slf4j;
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,7 +13,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.security.Principal;
+import com.thesis.recommenderapp.domain.SearchString;
+import com.thesis.recommenderapp.domain.User;
+import com.thesis.recommenderapp.domain.Watched;
+import com.thesis.recommenderapp.service.UserService;
+import com.thesis.recommenderapp.service.WatchedService;
 
 @Controller
 public class WatchListController {
@@ -37,15 +37,7 @@ public class WatchListController {
                             @PageableDefault(sort = "item.title", direction = Sort.Direction.ASC) Pageable watchedPageable) {
         User user = userService.getUserByUserName(principal.getName());
         Page<Watched> watchedPage = watchedService.getWatchedList(user.getId(), watchedPageable);
-        String[] sortParts = watchedPageable.getSort().toString().split(":");
-        watchedPage.getContent().forEach(watched -> watched.getItem().setYear(watched.getItem().getYear().replace("–", "-")));
-        model.addAttribute("sortBy", sortParts[0].trim());
-        model.addAttribute("sortDirection", sortParts[1].trim());
-        model.addAttribute("items", watchedPage.getContent());
-        model.addAttribute("totalPages", watchedPage.getTotalPages());
-        model.addAttribute("current", watchedPageable.getPageNumber());
-        model.addAttribute("previous", watchedPageable.previousOrFirst().getPageNumber());
-        model.addAttribute("next", watchedPageable.next().getPageNumber());
+        addModelAttributes(model, watchedPageable, watchedPage);
         return "watch_list";
     }
 
@@ -55,9 +47,14 @@ public class WatchListController {
         User user = userService.getUser(userId);
         User currentUser = userService.getUserByUserName(principal.getName());
         Page<Watched> watchedPage = watchedService.getWatchedList(user.getId(), watchedPageable);
+        addUserAttributesIfNotSameAsCurrentUser(model, user, currentUser);
+        addModelAttributes(model, watchedPageable, watchedPage);
+        return "watch_list";
+    }
+
+    private void addModelAttributes(Model model, @PageableDefault(sort = "item.title", direction = Sort.Direction.ASC) Pageable watchedPageable, Page<Watched> watchedPage) {
         String[] sortParts = watchedPageable.getSort().toString().split(":");
         watchedPage.getContent().forEach(watched -> watched.getItem().setYear(watched.getItem().getYear().replace("–", "-")));
-        addUserAttributesIfNotSameAsCurrentUser(model, user, currentUser);
         model.addAttribute("sortBy", sortParts[0].trim());
         model.addAttribute("sortDirection", sortParts[1].trim());
         model.addAttribute("items", watchedPage.getContent());
@@ -65,7 +62,6 @@ public class WatchListController {
         model.addAttribute("current", watchedPageable.getPageNumber());
         model.addAttribute("previous", watchedPageable.previousOrFirst().getPageNumber());
         model.addAttribute("next", watchedPageable.next().getPageNumber());
-        return "watch_list";
     }
 
     private void addUserAttributesIfNotSameAsCurrentUser(Model model, User user, User currentUser) {

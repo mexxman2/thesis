@@ -47,7 +47,7 @@ public class DetailsController {
         if (watched != null) {
             addToWatchListItem.setRating(watched.getRating());
         }
-        boolean isMovie = item.getClass().getSimpleName().equals("Movie");
+        boolean isMovie = item.getType().equals("Movie");
         item.setYear(item.getYear().replace("–", "-"));
         model.addAttribute("item", item);
         model.addAttribute("isMovie", isMovie);

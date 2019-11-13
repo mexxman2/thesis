@@ -43,6 +43,14 @@
                                 <th><a class="btn btn-link" href="<c:url value='/watch_list?page=${current}&sort=item.imdbRating,ASC&sort=item.title,ASC' />">Imdb rating</a></th>
                             </c:otherwise>
                         </c:choose>
+                        <c:choose>
+                            <c:when test="${sortBy == 'item.type' && sortDirection == 'ASC,item.title'}">
+                                <th><a class="btn btn-link" href="<c:url value='/watch_list?page=${current}&sort=item.type,DESC&sort=item.title,ASC' />">Type</a></th>
+                            </c:when>
+                            <c:otherwise>
+                                <th><a class="btn btn-link" href="<c:url value='/watch_list?page=${current}&sort=item.type,ASC&sort=item.title,ASC' />">Type</a></th>
+                            </c:otherwise>
+                        </c:choose>
                         <th>Action</th>
                     </tr>
                     <c:forEach var="watched" items="${items}">
@@ -51,6 +59,7 @@
                             <td>${watched.rating}</td>
                             <td>${watched.item.year}</td>
                             <td>${watched.item.imdbRating}</td>
+                            <td>${watched.item.type}</td>
                             <td><a href="<c:url value='/deleteWatched?watchedId=${watched.id}&page=${current}' />">Delete</a></td>
                         </tr>
                     </c:forEach>
@@ -117,18 +126,26 @@
                         </c:choose>
                         <c:choose>
                             <c:when test="${sortBy == 'item.year' && sortDirection == 'ASC,item.title'}">
-                                <th><a class="btn btn-link" href="<c:url value='/watch_list?userId=${user.id}&page=${current}&sort=item.year,DESC&sort=item.title,ASC' />">Rating</a></th>
+                                <th><a class="btn btn-link" href="<c:url value='/watch_list?userId=${user.id}&page=${current}&sort=item.year,DESC&sort=item.title,ASC' />">Release date</a></th>
                             </c:when>
                             <c:otherwise>
-                                <th><a class="btn btn-link" href="<c:url value='/watch_list?userId=${user.id}&page=${current}&sort=item.year,ASC&sort=item.title,ASC' />">Rating</a></th>
+                                <th><a class="btn btn-link" href="<c:url value='/watch_list?userId=${user.id}&page=${current}&sort=item.year,ASC&sort=item.title,ASC' />">Release date</a></th>
                             </c:otherwise>
                         </c:choose>
                         <c:choose>
                             <c:when test="${sortBy == 'item.imdbRating' && sortDirection == 'ASC,item.title'}">
-                                <th><a class="btn btn-link" href="<c:url value='/watch_list?userId=${user.id}&page=${current}&sort=item.imdbRating,DESC&sort=item.title,ASC' />">Rating</a></th>
+                                <th><a class="btn btn-link" href="<c:url value='/watch_list?userId=${user.id}&page=${current}&sort=item.imdbRating,DESC&sort=item.title,ASC' />">Imdb rating</a></th>
                             </c:when>
                             <c:otherwise>
-                                <th><a class="btn btn-link" href="<c:url value='/watch_list?userId=${user.id}&page=${current}&sort=item.imdbRating,ASC&sort=item.title,ASC' />">Rating</a></th>
+                                <th><a class="btn btn-link" href="<c:url value='/watch_list?userId=${user.id}&page=${current}&sort=item.imdbRating,ASC&sort=item.title,ASC' />">Imdb rating</a></th>
+                            </c:otherwise>
+                        </c:choose>
+                        <c:choose>
+                            <c:when test="${sortBy == 'item.type' && sortDirection == 'ASC,item.title'}">
+                                <th><a class="btn btn-link" href="<c:url value='/watch_list?userId=${user.id}&page=${current}&sort=item.type,DESC&sort=item.title,ASC' />">Type</a></th>
+                            </c:when>
+                            <c:otherwise>
+                                <th><a class="btn btn-link" href="<c:url value='/watch_list?userId=${user.id}&page=${current}&sort=item.type,ASC&sort=item.title,ASC' />">Type</a></th>
                             </c:otherwise>
                         </c:choose>
                     </tr>
@@ -138,6 +155,7 @@
                             <td>${watched.rating}</td>
                             <td>${watched.item.year}</td>
                             <td>${watched.item.imdbRating}</td>
+                            <td>${watched.item.type}</td>
                         </tr>
                     </c:forEach>
                 </table>
