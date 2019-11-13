@@ -14,15 +14,15 @@
         <p>Number of seasons: ${item.totalSeasons}</p>
     </c:otherwise>
 </c:choose>
-<p>Release date: {item.year}</p>
-<p>Genres: {item.genre}</p>
-<p>imdb rating: {item.imdbRating}</p>
+<p>Release date: ${item.year}</p>
+<p>Genres: ${item.genre}</p>
+<p>imdb rating: ${item.imdbRating}</p>
 
 <form:form modelAttribute="addToWatchListItem" action="addToWatchList" method="post">
     <form:hidden path="itemId" value="${item.id}" />
     <p>
         <label for="rating">Rate it</label>
-        <form:select path="rating" id="rating">
+        <form:select path="rating" id="rating" class="form-control">
             <form:option value="1" label="1"/>
             <form:option value="2" label="2"/>
             <form:option value="3" label="3"/>
@@ -36,6 +36,6 @@
         </form:select>
     </p>
     <p>
-        <button type=submit>Add to list</button>
+        <button type="submit" class="btn btn-primary">Add to list</button>
     </p>
 </form:form>
