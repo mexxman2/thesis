@@ -49,6 +49,8 @@
                         <tr>
                             <td><a href="<c:url value='/details?itemId=${watched.item.id}' />">${watched.item.title}</a></td>
                             <td>${watched.rating}</td>
+                            <td>${watched.item.year}</td>
+                            <td>${watched.item.imdbRating}</td>
                             <td><a href="<c:url value='/deleteWatched?watchedId=${watched.id}&page=${current}' />">Delete</a></td>
                         </tr>
                     </c:forEach>
