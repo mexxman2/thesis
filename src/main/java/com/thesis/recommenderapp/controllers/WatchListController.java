@@ -33,7 +33,7 @@ public class WatchListController {
     }
 
     @RequestMapping(value = "watch_list")
-    public String watchList(Model model, @RequestParam Integer page, Principal principal,
+    public String watchList(Model model, Principal principal,
                             @PageableDefault(sort = "item.title", direction = Sort.Direction.ASC) Pageable watchedPageable) {
         User user = userService.getUserByUserName(principal.getName());
         Page<Watched> watchedPage = watchedService.getWatchedList(user.getId(), watchedPageable);
@@ -46,7 +46,7 @@ public class WatchListController {
     }
 
     @RequestMapping(value = "watch_list", params = "userId")
-    public String otherUserWatchList(Model model, @RequestParam Long userId, @RequestParam Integer page, Principal principal,
+    public String otherUserWatchList(Model model, @RequestParam Long userId, Principal principal,
                                      @PageableDefault(sort = "item.title", direction = Sort.Direction.ASC) Pageable watchedPageable) {
         User user = userService.getUser(userId);
         User currentUser = userService.getUserByUserName(principal.getName());
