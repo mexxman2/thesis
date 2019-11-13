@@ -44,9 +44,11 @@ public class DetailsController {
         User user = userService.getUserByUserName(principal.getName());
         Item item = itemService.getItem(itemId);
         Watched watched = watchedService.getWatched(user, item);
+        if (watched != null) {
+            addToWatchListItem.setRating(watched.getRating());
+        }
         boolean isMovie = item.getClass().getSimpleName().equals("Movie");
         item.setYear(item.getYear().replace("–", "-"));
-        addToWatchListItem.setRating(watched.getRating());
         model.addAttribute("item", item);
         model.addAttribute("isMovie", isMovie);
         return "details";
