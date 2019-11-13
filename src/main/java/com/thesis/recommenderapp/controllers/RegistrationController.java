@@ -1,11 +1,8 @@
 package com.thesis.recommenderapp.controllers;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
-
+import com.thesis.recommenderapp.domain.RegistrationRequest;
+import com.thesis.recommenderapp.service.UserService;
+import com.thesis.recommenderapp.service.exceptions.UsernameAlreadyExistsException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -19,9 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.thesis.recommenderapp.domain.RegistrationRequest;
-import com.thesis.recommenderapp.service.UserService;
-import com.thesis.recommenderapp.service.exceptions.UsernameAlreadyExistsException;
+import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 @Controller
 @Slf4j
@@ -58,7 +57,7 @@ public class RegistrationController {
         return result;
     }
 
-    private boolean isAuthenticated(){
+    private boolean isAuthenticated() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return authentication != null && !(authentication instanceof AnonymousAuthenticationToken) && authentication.isAuthenticated();
     }

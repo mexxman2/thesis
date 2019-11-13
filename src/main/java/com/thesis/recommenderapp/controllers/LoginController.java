@@ -1,7 +1,6 @@
 package com.thesis.recommenderapp.controllers;
 
-import javax.servlet.http.HttpSession;
-
+import com.thesis.recommenderapp.domain.LoginRequest;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -11,7 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.thesis.recommenderapp.domain.LoginRequest;
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class LoginController {
@@ -37,7 +36,7 @@ public class LoginController {
         return result;
     }
 
-    private boolean isAuthenticated(){
+    private boolean isAuthenticated() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return authentication != null && !(authentication instanceof AnonymousAuthenticationToken) && authentication.isAuthenticated();
     }

@@ -1,16 +1,15 @@
 package com.thesis.recommenderapp.service;
 
 import com.thesis.recommenderapp.domain.Item;
+import com.thesis.recommenderapp.domain.Movie;
+import com.thesis.recommenderapp.domain.Series;
+import com.thesis.recommenderapp.service.exceptions.SearchReturnedErrorException;
+import com.thesis.recommenderapp.service.exceptions.ShouldBeMoreSpecificException;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 import org.springframework.stereotype.Service;
-
-import com.thesis.recommenderapp.domain.Movie;
-import com.thesis.recommenderapp.domain.Series;
-import com.thesis.recommenderapp.service.exceptions.SearchReturnedErrorException;
-import com.thesis.recommenderapp.service.exceptions.ShouldBeMoreSpecificException;
 
 @Service
 public class JsonParserService {
@@ -43,16 +42,16 @@ public class JsonParserService {
     private Series getSeries(JSONObject jsonObject) {
         try {
             return Series.builder()
-                    .title(jsonObject.getString("Title"))
-                    .year(jsonObject.getString("Year"))
-                    .runtime(jsonObject.getString("Runtime"))
-                    .genre(jsonObject.getString("Genre"))
-                    .description(jsonObject.getString("Plot"))
-                    .imdbRating(jsonObject.getString("imdbRating"))
-                    .totalSeasons(jsonObject.getString("totalSeasons"))
-                    .imdbId(jsonObject.getString("imdbID"))
-                    .posterPath(jsonObject.getString("Poster"))
-                    .build();
+                .title(jsonObject.getString("Title"))
+                .year(jsonObject.getString("Year"))
+                .runtime(jsonObject.getString("Runtime"))
+                .genre(jsonObject.getString("Genre"))
+                .description(jsonObject.getString("Plot"))
+                .imdbRating(jsonObject.getString("imdbRating"))
+                .totalSeasons(jsonObject.getString("totalSeasons"))
+                .imdbId(jsonObject.getString("imdbID"))
+                .posterPath(jsonObject.getString("Poster"))
+                .build();
         } catch (JSONException e) {
             throw new SearchReturnedErrorException();
         }
@@ -61,15 +60,15 @@ public class JsonParserService {
     private Movie getMovie(JSONObject jsonObject) {
         try {
             return Movie.builder()
-                    .title(jsonObject.getString("Title"))
-                    .year(jsonObject.getString("Year"))
-                    .runtime(jsonObject.getString("Runtime"))
-                    .genre(jsonObject.getString("Genre"))
-                    .description(jsonObject.getString("Plot"))
-                    .imdbRating(jsonObject.getString("imdbRating"))
-                    .imdbId(jsonObject.getString("imdbID"))
-                    .posterPath(jsonObject.getString("Poster"))
-                    .build();
+                .title(jsonObject.getString("Title"))
+                .year(jsonObject.getString("Year"))
+                .runtime(jsonObject.getString("Runtime"))
+                .genre(jsonObject.getString("Genre"))
+                .description(jsonObject.getString("Plot"))
+                .imdbRating(jsonObject.getString("imdbRating"))
+                .imdbId(jsonObject.getString("imdbID"))
+                .posterPath(jsonObject.getString("Poster"))
+                .build();
         } catch (JSONException e) {
             throw new SearchReturnedErrorException();
         }

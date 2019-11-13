@@ -4,12 +4,8 @@
 <h1>Welcome</h1>
 
 <h2>Top 10 most popular items</h2>
-<table>
-
-  <c:forEach var="item" items="${topTenItems}">
-    <tr>
-      <td><a href="<c:url value='/details?itemId=${item.id}' />">${item.title}</a></td>
-    </tr>
-  </c:forEach>
-
-</table>
+<c:forEach var="item" items="${topTenItems}">
+    <div class="row">
+        <td><a href="<c:url value='/details?itemId=${item.id}' />">${item.title}</a></td>
+    </div>
+</c:forEach>

@@ -1,21 +1,18 @@
 package com.thesis.recommenderapp.service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
+import com.thesis.recommenderapp.dao.WatchedDao;
+import com.thesis.recommenderapp.domain.AddToWatchListItem;
+import com.thesis.recommenderapp.domain.Item;
+import com.thesis.recommenderapp.domain.User;
+import com.thesis.recommenderapp.domain.Watched;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.thesis.recommenderapp.dao.WatchedDao;
-import com.thesis.recommenderapp.domain.AddToWatchListItem;
-import com.thesis.recommenderapp.domain.Item;
-import com.thesis.recommenderapp.domain.User;
-import com.thesis.recommenderapp.domain.Watched;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional

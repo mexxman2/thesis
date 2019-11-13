@@ -1,6 +1,8 @@
 package com.thesis.recommenderapp.service;
 
-import java.util.Properties;
+import com.thesis.recommenderapp.domain.User;
+import com.thesis.recommenderapp.service.exceptions.EmailCouldNotBeSentException;
+import org.springframework.stereotype.Service;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -9,11 +11,7 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-
-import org.springframework.stereotype.Service;
-
-import com.thesis.recommenderapp.domain.User;
-import com.thesis.recommenderapp.service.exceptions.EmailCouldNotBeSentException;
+import java.util.Properties;
 
 @Service
 public class EmailSenderService {

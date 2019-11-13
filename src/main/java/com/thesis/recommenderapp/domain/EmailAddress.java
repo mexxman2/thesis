@@ -1,8 +1,8 @@
 package com.thesis.recommenderapp.domain;
 
-import javax.validation.constraints.Email;
-
 import lombok.Data;
+
+import javax.validation.constraints.Email;
 
 @Data
 public class EmailAddress {

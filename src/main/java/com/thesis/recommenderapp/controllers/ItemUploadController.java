@@ -1,10 +1,10 @@
 package com.thesis.recommenderapp.controllers;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
-
+import com.thesis.recommenderapp.domain.SearchString;
+import com.thesis.recommenderapp.domain.UploadItemRequest;
+import com.thesis.recommenderapp.service.ItemService;
+import com.thesis.recommenderapp.service.exceptions.SearchReturnedErrorException;
+import com.thesis.recommenderapp.service.exceptions.ShouldBeMoreSpecificException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -13,11 +13,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.thesis.recommenderapp.domain.SearchString;
-import com.thesis.recommenderapp.domain.UploadItemRequest;
-import com.thesis.recommenderapp.service.ItemService;
-import com.thesis.recommenderapp.service.exceptions.SearchReturnedErrorException;
-import com.thesis.recommenderapp.service.exceptions.ShouldBeMoreSpecificException;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 @Controller
 public class ItemUploadController {

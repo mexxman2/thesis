@@ -8,7 +8,7 @@
         <p>You have no friends</p>
     </c:when>
     <c:otherwise>
-        <table>
+        <table class="table">
           <c:forEach var="user" items="${friends}">
             <tr>
               <td><a href="<c:url value='/watch_list?userId=${user.id}' />">${user.userName}</a></td>

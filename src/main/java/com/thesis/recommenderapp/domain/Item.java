@@ -1,18 +1,16 @@
 package com.thesis.recommenderapp.domain;
 
-import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
+import java.util.Objects;
 
 @Entity
 @Inheritance
@@ -44,11 +42,15 @@ public abstract class Item {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Item item = (Item) o;
         return Objects.equals(id, item.id) &&
-                Objects.equals(imdbId, item.imdbId);
+            Objects.equals(imdbId, item.imdbId);
     }
 
     @Override

@@ -1,9 +1,9 @@
 package com.thesis.recommenderapp.domain;
 
+import lombok.Data;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-
-import lombok.Data;
 
 @Data
 public class RegistrationRequest {

@@ -1,14 +1,13 @@
 package com.thesis.recommenderapp.controllers;
 
-import java.security.Principal;
-
+import com.thesis.recommenderapp.domain.User;
+import com.thesis.recommenderapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.thesis.recommenderapp.domain.User;
-import com.thesis.recommenderapp.service.UserService;
+import java.security.Principal;
 
 @Controller
 public class FriendController {

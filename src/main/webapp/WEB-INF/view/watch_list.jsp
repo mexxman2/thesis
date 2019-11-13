@@ -9,7 +9,7 @@
                 <p>List is empty</p>
             </c:when>
             <c:otherwise>
-                <table>
+                <table class="table">
                     <tr>
                         <th>Title</th>
                         <th>Rating</th>
@@ -66,7 +66,7 @@
                 <p>List is empty</p>
             </c:when>
             <c:otherwise>
-                <table>
+                <table class="table">
                     <tr>
                         <th>Title</th>
                         <th>Rating</th>
