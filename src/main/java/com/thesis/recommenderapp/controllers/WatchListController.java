@@ -38,7 +38,11 @@ public class WatchListController {
                             @PageableDefault(sort = "item.title", direction = Sort.Direction.ASC) Pageable watchedPageable) {
         User user = userService.getUserByUserName(principal.getName());
         Page<Watched> watchedPage = watchedService.getWatchedList(user.getId(), watchedPageable);
-        log.info(watchedPageable.getSort().toString());
+        String[] sortParts = watchedPageable.getSort().toString().split(":");
+        log.info(sortParts[0].trim());
+        log.info(sortParts[1].trim());
+        model.addAttribute("sortBy", sortParts[0].trim());
+        model.addAttribute("sortDirection", sortParts[1].trim());
         model.addAttribute("items", watchedPage.getContent());
         model.addAttribute("totalPages", watchedPage.getTotalPages());
         model.addAttribute("current", watchedPageable.getPageNumber());
@@ -53,7 +57,10 @@ public class WatchListController {
         User user = userService.getUser(userId);
         User currentUser = userService.getUserByUserName(principal.getName());
         Page<Watched> watchedPage = watchedService.getWatchedList(user.getId(), watchedPageable);
+        String[] sortParts = watchedPageable.getSort().toString().split(":");
         addUserAttributesIfNotSameAsCurrentUser(model, user, currentUser);
+        model.addAttribute("sortBy", sortParts[0].trim());
+        model.addAttribute("sortDirection", sortParts[1].trim());
         model.addAttribute("items", watchedPage.getContent());
         model.addAttribute("totalPages", watchedPage.getTotalPages());
         model.addAttribute("current", watchedPageable.getPageNumber());
