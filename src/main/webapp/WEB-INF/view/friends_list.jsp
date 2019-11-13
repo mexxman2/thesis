@@ -26,7 +26,7 @@
                     <c:if test="${previous lt current}">
                         <li class="page-item"><a class="page-link" href="<c:url value='/friends_list?page=${previous}' />">${previous}</a></li>
                     </c:if>
-                    <li class="page-item active"><a class="page-link" href="#' />">${current}</a></li>
+                    <li class="page-item active"><a class="page-link" href="#">${current}</a></li>
                     <c:if test="${next lt totalPages}">
                         <li class="page-item"><a class="page-link" href="<c:url value='/friends_list?page=${next}' />">${next}</a></li>
                     </c:if>

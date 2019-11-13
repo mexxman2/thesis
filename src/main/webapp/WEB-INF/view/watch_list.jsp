@@ -11,8 +11,8 @@
             <c:otherwise>
                 <table class="table">
                     <tr>
-                        <th>Title</th>
-                        <th>Rating</th>
+                        <th><a class="page-link" href="<c:url value='/watch_list?page=${current}&sort=rating,ASC' />">Title</a></th>
+                        <th><a class="page-link" href="<c:url value='/watch_list?page=${current}&sort=rating,ASC' />">Rating</a></th>
                         <th>Action</th>
                     </tr>
                     <c:forEach var="watched" items="${items}">
@@ -33,7 +33,7 @@
                             <c:if test="${previous lt current}">
                                 <li class="page-item"><a class="page-link" href="<c:url value='/watch_list?page=${previous}' />">${previous}</a></li>
                             </c:if>
-                            <li class="page-item active"><a class="page-link" href="#' />">${current}</a></li>
+                            <li class="page-item active"><a class="page-link" href="#">${current}</a></li>
                             <c:if test="${next lt totalPages}">
                                 <li class="page-item"><a class="page-link" href="<c:url value='/watch_list?page=${next}' />">${next}</a></li>
                             </c:if>
@@ -68,8 +68,8 @@
             <c:otherwise>
                 <table class="table">
                     <tr>
-                        <th>Title</th>
-                        <th>Rating</th>
+                        <th><a class="page-link" href="<c:url value='/watch_list?userId=${user.id}&page=${current}&sort=item.title,ASC' />">Title</a></th>
+                        <th><a class="page-link" href="<c:url value='/watch_list?userId=${user.id}&page=${current}&sort=rating,ASC' />">Rating</a></th>
                     </tr>
                     <c:forEach var="watched" items="${items}">
                         <tr>
@@ -88,7 +88,7 @@
                             <c:if test="${previous lt current}">
                                 <li class="page-item"><a class="page-link" href="<c:url value='/watch_list?userId=${user.id}&page=${previous}' />">${previous}</a></li>
                             </c:if>
-                            <li class="page-item active"><a class="page-link" href="#' />">${current}</a></li>
+                            <li class="page-item active"><a class="page-link" href="#">${current}</a></li>
                             <c:if test="${next lt totalPages}">
                                 <li class="page-item"><a class="page-link" href="<c:url value='/watch_list?userId=${user.id}&page=${next}' />">${next}</a></li>
                             </c:if>
