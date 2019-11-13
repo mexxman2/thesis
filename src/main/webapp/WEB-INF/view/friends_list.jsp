@@ -45,7 +45,6 @@
 
 <form:form modelAttribute="email" action="sendEmail" method="post">
     <div class="form-row">
-        <form:errors path="*" element="div" cssClass="validation-error" />
         <div class="col-xs-3">
             <label for="email">Invite friend: </label>
         </div>
@@ -54,6 +53,11 @@
         </div>
         <div class="col-xs-3">
             <button type="submit" class="btn btn-primary">Send</button>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="alert alert-danger" role="alert">
+            <form:errors path="*" element="div" />
         </div>
     </div>
 </form:form>

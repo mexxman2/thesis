@@ -7,26 +7,26 @@
 
 <form:form modelAttribute="uploadItem" action="uploadItemPost">
     <spring:bind path="titleOrURL">
-        <p>
-            <label for="input_title_or_url">Imdb title or URL</label>
-            <form:input path="titleOrURL" id="input_title_or_url" />
-            <form:errors path="*" element="div" cssClass="validation-error" />
-        </p>
+        <label for="input_title_or_url">Imdb title or URL</label>
+        <form:input path="titleOrURL" id="input_title_or_url" class="form-control" />
+        <div class="form-row">
+            <div class="alert alert-danger" role="alert">
+                <form:errors path="*" element="div" />
+            </div>
+        </div>
         <c:if test="${status.error}">
-            <p>
-                <a href="<c:url value='/confirmUpload' />">Confirm</a>
-            </p>
+            <a href="<c:url value='/confirmUpload' />">Confirm</a>
         </c:if>
     </spring:bind>
-    <p>
+    <div class="form-row">
         <label for="movie">Movie</label>
         <form:radiobutton path="type" value="movie" id="movie" checked="checked"/>
-    </p>
-    <p>
+    </div>
+    <div class="form-row">
         <label for="series">Series</label>
         <form:radiobutton path="type" value="series" id="series"/>
-    </p>
-    <p>
-        <button type="submit">Add</button>
-    </p>
+    </div>
+    <div class="form-row">
+        <button type="submit" class="btn btn-primary">Add</button>
+    </div>
 </form:form>
