@@ -7,13 +7,19 @@
 
 <form:form modelAttribute="uploadItem" action="uploadItemPost">
     <spring:bind path="titleOrURL">
-        <label for="input_title_or_url">Imdb title or URL</label>
-        <form:input path="titleOrURL" id="input_title_or_url" class="form-control" />
-        <div class="form-row">
+        <div class="form-group row">
+            <div class="col-sm-2">
+                <label for="input_title_or_url">Imdb title or URL</label>
+            </div>
+            <div class="col-sm-10">
+                <form:input path="titleOrURL" id="input_title_or_url" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group row">
             <form:errors path="*" element="div" class="alert alert-danger" role="alert" />
         </div>
         <c:if test="${status.error}">
-            <a href="<c:url value='/confirmUpload' />">Confirm</a>
+            <a class="btn btn-primary" href="<c:url value='/confirmUpload' />">Confirm</a>
         </c:if>
     </spring:bind>
     <div class="form-row">
