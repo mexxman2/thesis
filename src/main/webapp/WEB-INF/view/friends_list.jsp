@@ -46,13 +46,13 @@
 <form:form modelAttribute="email" action="sendEmail" method="post" class="form-inline">
     <div class="form-row">
         <form:errors path="*" element="div" cssClass="validation-error" />
-        <div class="col-sm-6">
+        <div class="col-xs-6">
             <label for="email">Invite friends by entering their email address: </label>
         </div>
-        <div class="col-sm-4">
+        <div class="col-xs-4">
             <form:input path="email" id="email" placeholder="Email address" class="form-control mx-sm-2" />
         </div>
-        <div class="col-sm-2">
+        <div class="col-xs-2">
             <button type="submit" class="btn btn-primary">Send</button>
         </div>
     </div>
