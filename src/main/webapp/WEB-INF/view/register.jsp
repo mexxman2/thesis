@@ -5,9 +5,7 @@
 
 <form:form modelAttribute="registerUser" method="POST" action="registerUserPost" class="form-inline">
     <div class="form-row">
-        <div class="alert alert-danger" role="alert">
-            <form:errors path="*" element="div" />
-        </div>
+        <form:errors path="*" element="div" class="alert alert-danger" role="alert" />
     </div>
     <div class="form-row">
         <label for="input_username">Username</label>

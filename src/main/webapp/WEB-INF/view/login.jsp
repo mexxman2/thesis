@@ -3,11 +3,9 @@
 
 <h1>Welcome</h1>
 <h2>Login or Register to start!</h2>
-<form:form modelAttribute="loginRequest" action="login" class="form-inline">
+<form:form modelAttribute="loginRequest" action="login">
     <div class="form-row">
-        <div class="alert alert-danger" role="alert">
-            <form:errors path="*" element="div" />
-        </div>
+        <form:errors path="*" element="div" class="alert alert-danger" role="alert" />
     </div>
     <div class="form-row">
         <label for="username">Username</label>
