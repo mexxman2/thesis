@@ -16,6 +16,7 @@
 </c:choose>
 <p>Release date: ${item.year}</p>
 <p>Genres: ${item.genre}</p>
+<p>Runtime: ${item.runtime}</p>
 <p>imdb rating: ${item.imdbRating}</p>
 
 <form:form modelAttribute="addToWatchListItem" action="addToWatchList" method="post" class="form-inline">
