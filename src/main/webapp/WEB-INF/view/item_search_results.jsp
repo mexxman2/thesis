@@ -25,14 +25,14 @@
     <div class="row">
         <nav aria-label="Page navigation example">
             <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="<c:url value='/searchItem?substring=${substring}&page=${previous}' />">Previous</a></li>
+                <li class="page-item ${previous == current ? 'disabled' : ''}"><a class="page-link" href="<c:url value='/searchItem?substring=${substring}&page=${previous}' />">Previous</a></li>
                 <c:if test="${previous-1 ge 0}">
                     <li class="page-item"><a class="page-link" href="<c:url value='/searchItem?substring=${substring}&page=${previous-1}' />">${previous-1}</a></li>
                 </c:if>
                 <c:if test="${previous lt current}">
                     <li class="page-item"><a class="page-link" href="<c:url value='/searchItem?substring=${substring}&page=${previous}' />">${previous}</a></li>
                 </c:if>
-                <li class="page-item">${current}</li>
+                <li class="page-item active"><a class="page-link" href="#' />">${current}</a></li>
                 <c:if test="${next lt totalPages}">
                     <li class="page-item"><a class="page-link" href="<c:url value='/searchItem?substring=${substring}&page=${next}' />">${next}</a></li>
                 </c:if>
@@ -42,7 +42,7 @@
                 <c:if test="${next+2 lt totalPages}">
                     <li class="page-item"><a class="page-link" href="<c:url value='/searchItem?substring=${substring}&page=${next+2}' />">${next+2}</a></li>
                 </c:if>
-                <li class="page-item"><a class="page-link" href="<c:url value='/searchItem?substring=${substring}&page=${next lt totalPages ? next : current}' />">Next</a></li>
+                <li class="page-item ${next == totalPages ? 'disabled' : ''}"><a class="page-link" href="<c:url value='/searchItem?substring=${substring}&page=${next lt totalPages ? next : current}' />">Next</a></li>
             </ul>
         </nav>
     </div>
