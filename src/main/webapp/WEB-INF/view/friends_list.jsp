@@ -43,7 +43,7 @@
     </c:otherwise>
 </c:choose>
 
-<form:form modelAttribute="email" action="sendEmail" method="post" class="form-inline">
+<form:form modelAttribute="email" action="sendEmail" method="post">
     <div class="form-row">
         <form:errors path="*" element="div" cssClass="validation-error" />
         <div class="col-xs-3">
