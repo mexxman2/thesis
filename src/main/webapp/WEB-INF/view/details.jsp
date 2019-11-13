@@ -22,7 +22,7 @@
     <div class="form-group">
         <form:hidden path="itemId" value="${item.id}" />
         <label for="rating">Rate it</label>
-        <form:select path="rating" id="rating" class="form-control mx-sm-3">
+        <form:select path="rating" id="rating" class="form-control mx-sm-2">
             <form:option value="1" label="1"/>
             <form:option value="2" label="2"/>
             <form:option value="3" label="3"/>

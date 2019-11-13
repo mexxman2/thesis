@@ -23,7 +23,7 @@
         </c:otherwise>
     </c:choose>
     <div class="row">
-        <nav aria-label="Page navigation example">
+        <nav>
             <ul class="pagination">
                 <li class="page-item ${previous == current ? 'disabled' : ''}"><a class="page-link" href="<c:url value='/searchItem?substring=${substring}&page=${previous}' />">Previous</a></li>
                 <c:if test="${previous-1 ge 0}">

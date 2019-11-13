@@ -50,9 +50,13 @@ public class FriendsListController {
 
     @RequestMapping("friends_list")
     public String friendsList(Model model, @RequestParam Integer page, Principal principal,
-                              @PageableDefault(sort = "userName", direction = Sort.Direction.ASC) Pageable pageable) {
-        Page<User> friends = userService.getFriends(principal.getName(), pageable);
-        model.addAttribute("friendPage", friends);
+                              @PageableDefault(sort = "userName", direction = Sort.Direction.ASC) Pageable friendPageable) {
+        Page<User> friendPage = userService.getFriends(principal.getName(), friendPageable);
+        model.addAttribute("friends", friendPage.getContent());
+        model.addAttribute("totalPages", friendPage.getTotalPages());
+        model.addAttribute("current", friendPageable.getPageNumber());
+        model.addAttribute("previous", friendPageable.previousOrFirst().getPageNumber());
+        model.addAttribute("next", friendPageable.next().getPageNumber());
         return "friends_list";
     }
 
