@@ -23,12 +23,20 @@
         </c:if>
     </spring:bind>
     <div class="form-group row">
-        <label for="movie">Movie</label>
-        <form:radiobutton path="type" value="movie" id="movie" checked="checked"/>
+        <div class="col-sm-1">
+            <label for="movie">Movie</label>
+        </div>
+        <div class="col-xs-1">
+            <form:radiobutton path="type" value="movie" id="movie" checked="checked"/>
+        </div>
     </div>
     <div class="form-group row">
-        <label for="series">Series</label>
-        <form:radiobutton path="type" value="series" id="series"/>
+        <div class="col-sm-1">
+            <label for="series">Series</label>
+        </div>
+        <div class="col-xs-1">
+            <form:radiobutton path="type" value="series" id="series"/>
+        </div>
     </div>
     <div class="form-row">
         <button type="submit" class="btn btn-primary">Add</button>
