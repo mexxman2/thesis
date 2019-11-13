@@ -1,10 +1,11 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
 <html>
     <head>
         <title>Recommendation</title>
-        <link rel="stylesheet" type="text/css" href="../../css/darkly-bootstrap.min.css">
+        <link href="<c:url value='/resources/css/darkly-bootstrap.min.css' />" rel="stylesheet">
     </head>
     <body>
         <tiles:insertAttribute name="navigation_bar" />
