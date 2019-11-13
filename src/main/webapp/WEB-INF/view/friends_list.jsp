@@ -9,12 +9,16 @@
     </c:when>
     <c:otherwise>
         <table class="table">
-          <c:forEach var="user" items="${friends}">
             <tr>
-              <td><a href="<c:url value='/watch_list?userId=${user.id}' />">${user.userName}</a></td>
-              <td><a href="<c:url value='/deleteFriend?userId=${user.id}' />">Delete friend</a></td>
+                <th>User name</th>
+                <th>Action</th>
             </tr>
-          </c:forEach>
+            <c:forEach var="user" items="${friends}">
+                <tr>
+                    <td><a href="<c:url value='/watch_list?userId=${user.id}' />">${user.userName}</a></td>
+                    <td><a href="<c:url value='/deleteFriend?userId=${user.id}' />">Delete friend</a></td>
+                </tr>
+            </c:forEach>
         </table>
         <div class="row">
             <nav>
@@ -42,23 +46,24 @@
         </div>
     </c:otherwise>
 </c:choose>
-
-<form:form modelAttribute="email" action="sendEmail" method="post">
-    <div class="form-row">
-        <div class="col-xs-3">
-            <label for="email">Invite friend: </label>
+<div class="row">
+    <form:form modelAttribute="email" action="sendEmail" method="post">
+        <div class="form-row">
+            <div class="col-xs-3">
+                <label for="email">Invite friend: </label>
+            </div>
+            <div class="col-xs-6">
+                <form:input path="email" id="email" placeholder="Email address" class="form-control mx-sm-2" />
+            </div>
+            <div class="col-xs-3">
+                <button type="submit" class="btn btn-primary">Send</button>
+            </div>
         </div>
-        <div class="col-xs-6">
-            <form:input path="email" id="email" placeholder="Email address" class="form-control mx-sm-2" />
+        <div class="form-group row">
+            <form:errors path="*" element="div" class="alert alert-danger" role="alert" />
         </div>
-        <div class="col-xs-3">
-            <button type="submit" class="btn btn-primary">Send</button>
-        </div>
-    </div>
-    <div class="form-group row">
-        <form:errors path="*" element="div" class="alert alert-danger" role="alert" />
-    </div>
-</form:form>
-<c:if test="${emailSent}">
-    <p>Email sent</p>
-</c:if>
+    </form:form>
+    <c:if test="${emailSent}">
+        <p>Email sent</p>
+    </c:if>
+</div>
