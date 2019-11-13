@@ -24,7 +24,7 @@ public class EditWatchListController {
     @RequestMapping(value = "addToWatchList", method = RequestMethod.POST)
     public String addToWatchList(AddToWatchListItem addToWatchListItem, Principal principal) {
         watchedService.saveWatched(addToWatchListItem, principal.getName());
-        return "redirect:watch_list?page=1";
+        return "redirect:watch_list";
     }
 
     @RequestMapping("deleteWatched")

@@ -49,7 +49,7 @@ public class FriendsListController {
     }
 
     @RequestMapping("friends_list")
-    public String friendsList(Model model, @RequestParam Integer page, Principal principal,
+    public String friendsList(Model model, Principal principal,
                               @PageableDefault(sort = "userName", direction = Sort.Direction.ASC) Pageable friendPageable) {
         Page<User> friendPage = userService.getFriends(principal.getName(), friendPageable);
         model.addAttribute("friends", friendPage.getContent());
@@ -71,7 +71,7 @@ public class FriendsListController {
         } else {
             rejectSendInvite(bindingResult, violations);
         }
-        return "forward:friends_list?page=1";
+        return "forward:friends_list";
     }
 
     private void rejectSendInvite(BindingResult bindingResult, Set<ConstraintViolation<EmailAddress>> violations) {

@@ -20,14 +20,14 @@ public class FriendController {
     public String addFriend(@RequestParam Long userId, Principal principal) {
         User currentUser = userService.getUserByUserName(principal.getName());
         userService.addFriend(userId, currentUser.getId());
-        return "redirect:friends_list?page=1";
+        return "redirect:friends_list";
     }
 
     @RequestMapping("deleteFriend")
     public String deleteFriend(@RequestParam Long userId, Principal principal) {
         User currentUser = userService.getUserByUserName(principal.getName());
         userService.deleteFriend(userId, currentUser.getId());
-        return "redirect:friends_list?page=1";
+        return "redirect:friends_list";
     }
 
 }
