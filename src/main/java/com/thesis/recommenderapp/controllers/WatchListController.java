@@ -38,7 +38,7 @@ public class WatchListController {
                             @PageableDefault(sort = "item.title", direction = Sort.Direction.ASC) Pageable watchedPageable) {
         User user = userService.getUserByUserName(principal.getName());
         Page<Watched> watchedPage = watchedService.getWatchedList(user.getId(), watchedPageable);
-        log.info("own");
+        log.info(user.getUserName());
         model.addAttribute("items", watchedPage.getContent());
         model.addAttribute("totalPages", watchedPage.getTotalPages());
         model.addAttribute("current", watchedPageable.getPageNumber());
@@ -53,7 +53,6 @@ public class WatchListController {
         User user = userService.getUser(userId);
         User currentUser = userService.getUserByUserName(principal.getName());
         Page<Watched> watchedPage = watchedService.getWatchedList(user.getId(), watchedPageable);
-        log.info("friend");
         addUserAttributesIfNotSameAsCurrentUser(model, user, currentUser);
         model.addAttribute("items", watchedPage.getContent());
         model.addAttribute("totalPages", watchedPage.getTotalPages());

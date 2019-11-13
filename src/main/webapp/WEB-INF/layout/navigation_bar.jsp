@@ -9,10 +9,10 @@
             <a class="nav-link" href="<c:url value='/' />">Home</a>
         </li>
         <li class="nav-item active">
-            <a class="nav-link" href="<c:url value='/watch_list?page=1' />">Watch List</a>
+            <a class="nav-link" href="<c:url value='/watch_list' />">Watch List</a>
         </li>
         <li class="nav-item active">
-            <a class="nav-link" href="<c:url value='/friends_list?page=1' />">Friends List</a>
+            <a class="nav-link" href="<c:url value='/friends_list' />">Friends List</a>
         </li>
         <sec:authorize access="isAnonymous()">
             <li class="nav-item active">
