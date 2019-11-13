@@ -55,10 +55,8 @@
             <button type="submit" class="btn btn-primary">Send</button>
         </div>
     </div>
-    <div class="form-row">
-        <div class="alert alert-danger" role="alert">
-            <form:errors path="*" element="div" />
-        </div>
+    <div class="form-group row">
+        <form:errors path="*" element="div" class="alert alert-danger" role="alert" />
     </div>
 </form:form>
 <c:if test="${emailSent}">

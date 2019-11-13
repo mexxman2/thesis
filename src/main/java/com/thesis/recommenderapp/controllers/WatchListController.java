@@ -32,23 +32,31 @@ public class WatchListController {
         return new SearchString();
     }
 
-    @RequestMapping(value = "watch_list", params = "page")
+    @RequestMapping(value = "watch_list")
     public String watchList(Model model, @RequestParam Integer page, Principal principal,
                             @PageableDefault(sort = "item.title", direction = Sort.Direction.ASC) Pageable watchedPageable) {
         User user = userService.getUserByUserName(principal.getName());
-        Page<Watched> watchedList = watchedService.getWatchedList(user.getId(), watchedPageable);
-        addAttributes(model, page, watchedList.getContent());
+        Page<Watched> watchedPage = watchedService.getWatchedList(user.getId(), watchedPageable);
+        model.addAttribute("items", watchedPage.getContent());
+        model.addAttribute("totalPages", watchedPage.getTotalPages());
+        model.addAttribute("current", watchedPageable.getPageNumber());
+        model.addAttribute("previous", watchedPageable.previousOrFirst().getPageNumber());
+        model.addAttribute("next", watchedPageable.next().getPageNumber());
         return "watch_list";
     }
 
-    @RequestMapping(value = "watch_list", params = {"userId", "page"})
+    @RequestMapping(value = "watch_list", params = "userId")
     public String otherUserWatchList(Model model, @RequestParam Long userId, @RequestParam Integer page, Principal principal,
                                      @PageableDefault(sort = "item.title", direction = Sort.Direction.ASC) Pageable watchedPageable) {
         User user = userService.getUser(userId);
         User currentUser = userService.getUserByUserName(principal.getName());
-        Page<Watched> watchedList = watchedService.getWatchedList(user.getId(), watchedPageable);
+        Page<Watched> watchedPage = watchedService.getWatchedList(user.getId(), watchedPageable);
         addUserAttributesIfNotSameAsCurrentUser(model, user, currentUser);
-        addAttributes(model, page, watchedList.getContent());
+        model.addAttribute("items", watchedPage.getContent());
+        model.addAttribute("totalPages", watchedPage.getTotalPages());
+        model.addAttribute("current", watchedPageable.getPageNumber());
+        model.addAttribute("previous", watchedPageable.previousOrFirst().getPageNumber());
+        model.addAttribute("next", watchedPageable.next().getPageNumber());
         return "watch_list";
     }
 
@@ -57,18 +65,6 @@ public class WatchListController {
             model.addAttribute("user", user);
             model.addAttribute("isFriend", currentUser.getFriends().contains(user));
         }
-    }
-
-    private void addAttributes(Model model, Integer page, List<Watched> watchedList) {
-        if (watchedList.size() > page * 10) {
-            model.addAttribute("items", watchedList.subList((page - 1) * 10, page * 10));
-        } else {
-            model.addAttribute("items", watchedList.subList((page - 1) * 10, watchedList.size()));
-        }
-        model.addAttribute("prevPage", page - 1);
-        model.addAttribute("nextPage", page + 1);
-        model.addAttribute("hasNext", (page * 10) < watchedList.size());
-        model.addAttribute("hasPrev", page > 1);
     }
 
 }
