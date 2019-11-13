@@ -11,8 +11,8 @@
             <c:otherwise>
                 <table class="table">
                     <tr>
-                        <th><a class="page-link" href="<c:url value='/watch_list?page=${current}&sort=rating,ASC' />">Title</a></th>
-                        <th><a class="page-link" href="<c:url value='/watch_list?page=${current}&sort=rating,ASC' />">Rating</a></th>
+                        <th><a class="btn btn-link" href="<c:url value='/watch_list?page=${current}&sort=item.title,ASC' />">Title</a></th>
+                        <th><a class="btn btn-link" href="<c:url value='/watch_list?page=${current}&sort=rating,ASC' />">Rating</a></th>
                         <th>Action</th>
                     </tr>
                     <c:forEach var="watched" items="${items}">
@@ -68,8 +68,8 @@
             <c:otherwise>
                 <table class="table">
                     <tr>
-                        <th><a class="page-link" href="<c:url value='/watch_list?userId=${user.id}&page=${current}&sort=item.title,ASC' />">Title</a></th>
-                        <th><a class="page-link" href="<c:url value='/watch_list?userId=${user.id}&page=${current}&sort=rating,ASC' />">Rating</a></th>
+                        <th><a class="btn btn-link" href="<c:url value='/watch_list?userId=${user.id}&page=${current}&sort=item.title,ASC' />">Title</a></th>
+                        <th><a class="btn btn-link" href="<c:url value='/watch_list?userId=${user.id}&page=${current}&sort=rating,ASC' />">Rating</a></th>
                     </tr>
                     <c:forEach var="watched" items="${items}">
                         <tr>
