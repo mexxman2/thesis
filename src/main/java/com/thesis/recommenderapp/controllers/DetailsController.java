@@ -39,13 +39,14 @@ public class DetailsController {
     }
 
     @RequestMapping("details")
-    public String details(Model model, @RequestParam Long itemId, Principal principal) {
+    public String details(Model model, @RequestParam Long itemId, Principal principal,
+                          @ModelAttribute("addToWatchListItem") AddToWatchListItem addToWatchListItem) {
         User user = userService.getUserByUserName(principal.getName());
         Item item = itemService.getItem(itemId);
         Watched watched = watchedService.getWatched(user, item);
         boolean isMovie = item.getClass().getSimpleName().equals("Movie");
         item.setYear(item.getYear().replace("–", "-"));
-        model.addAttribute("itemRating", watched.getRating());
+        addToWatchListItem.setRating(watched.getRating());
         model.addAttribute("item", item);
         model.addAttribute("isMovie", isMovie);
         return "details";
