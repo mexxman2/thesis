@@ -44,10 +44,10 @@
 </c:choose>
 
 <form:form modelAttribute="email" action="sendEmail" method="post" class="form-inline">
-    <div class="form-group">
+    <div class="form-row">
         <form:errors path="*" element="div" cssClass="validation-error" />
         <label for="email">Invite friends by entering their email address: </label>
-        <form:input path="email" id="email" placeholder="Email address" class="form-control" />
+        <form:input path="email" id="email" placeholder="Email address" class="form-control mx-sm-2" />
         <button type="submit" class="btn btn-primary">Send</button>
     </div>
 </form:form>
