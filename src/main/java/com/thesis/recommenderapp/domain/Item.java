@@ -2,6 +2,7 @@ package com.thesis.recommenderapp.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,29 +19,30 @@ import java.util.Objects;
 @Data
 @NoArgsConstructor
 @Builder
+@AllArgsConstructor
 public class Item {
 
     @Id
     @GeneratedValue
-    Long id;
+    private Long id;
     @JsonProperty("Title")
-    String title;
+    private String title;
     @JsonProperty("Plot")
-    String description;
+    private String description;
     @JsonProperty("Year")
-    String year;
+    private String year;
     @JsonProperty("Runtime")
-    String runtime;
+    private String runtime;
     @JsonProperty("Genre")
-    String genre;
+    private String genre;
     @JsonProperty("imdbRating")
-    String imdbRating;
+    private String imdbRating;
     @JsonProperty("imdbID")
-    String imdbId;
+    private String imdbId;
     @JsonProperty("Poster")
-    String posterPath;
+    private String posterPath;
     @JsonProperty("Type")
-    String type;
+    private String type;
 
     @Override
     public boolean equals(Object o) {
