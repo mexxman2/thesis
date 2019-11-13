@@ -81,7 +81,6 @@
                 </div>
             </c:otherwise>
         </c:choose>
-        <%-- recommendation --%>
     </c:when>
     <c:otherwise>
         <h2>${user.userName}&#39;s list</h2>

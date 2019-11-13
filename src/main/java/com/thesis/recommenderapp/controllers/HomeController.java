@@ -1,5 +1,7 @@
 package com.thesis.recommenderapp.controllers;
 
+import java.security.Principal;
+
 import com.thesis.recommenderapp.domain.SearchString;
 import com.thesis.recommenderapp.service.RecommendationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +22,8 @@ public class HomeController {
     }
 
     @RequestMapping(value = {"/", "index"})
-    public String index(Model model) {
+    public String index(Model model, Principal principal) {
+        model.addAttribute("recommended", recommendationService.getRecommendations(principal.getName()));
         model.addAttribute("topTenItems", recommendationService.getTopTenPopularItems());
         return "index";
     }
