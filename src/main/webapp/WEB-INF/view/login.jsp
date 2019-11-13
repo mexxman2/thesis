@@ -8,18 +8,18 @@
         <form:errors path="*" element="div" class="alert alert-danger" role="alert" />
     </div>
     <div class="form-group row">
-        <div class="col-sm-2">
+        <div class="col-sm-1">
             <label for="username">Username</label>
         </div>
-        <div class="col-sm-5">
+        <div class="col-sm-3">
             <form:input path="username" id="username" placeholder="Username" class="form-control" />
         </div>
     </div>
     <div class="form-group row">
-        <div class="col-sm-2">
+        <div class="col-sm-1">
             <label for="password">Password</label>
         </div>
-        <div class="col-sm-5">
+        <div class="col-sm-3">
             <form:password path="password" id="password" placeholder="Password" class="form-control" />
         </div>
     </div>
