@@ -1,6 +1,7 @@
 package com.thesis.recommenderapp.controllers;
 
-import com.thesis.recommenderapp.domain.LoginRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -10,7 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.http.HttpSession;
+import com.thesis.recommenderapp.domain.LoginRequest;
 
 @Controller
 public class LoginController {

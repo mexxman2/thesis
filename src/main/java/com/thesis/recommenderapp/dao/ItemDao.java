@@ -1,9 +1,10 @@
 package com.thesis.recommenderapp.dao;
 
-import com.thesis.recommenderapp.domain.Item;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.thesis.recommenderapp.domain.Item;
 
 public interface ItemDao extends JpaRepository<Item, Long> {
 

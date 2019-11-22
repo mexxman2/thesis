@@ -2,6 +2,13 @@ package com.thesis.recommenderapp.controllers;
 
 import java.security.Principal;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import com.thesis.recommenderapp.domain.AddToWatchListItem;
 import com.thesis.recommenderapp.domain.Item;
 import com.thesis.recommenderapp.domain.SearchString;
@@ -10,13 +17,6 @@ import com.thesis.recommenderapp.domain.Watched;
 import com.thesis.recommenderapp.service.ItemService;
 import com.thesis.recommenderapp.service.UserService;
 import com.thesis.recommenderapp.service.WatchedService;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class DetailsController {
@@ -47,10 +47,8 @@ public class DetailsController {
         if (watched != null) {
             addToWatchListItem.setRating(watched.getRating());
         }
-        boolean isMovie = item.getType().equals("Movie");
         item.setYear(item.getYear().replace("–", "-"));
         model.addAttribute("item", item);
-        model.addAttribute("isMovie", isMovie);
         return "details";
     }
 

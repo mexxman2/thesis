@@ -1,13 +1,14 @@
 package com.thesis.recommenderapp.dao;
 
-import com.thesis.recommenderapp.domain.Item;
-import com.thesis.recommenderapp.domain.User;
-import com.thesis.recommenderapp.domain.Watched;
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 
-import java.util.List;
+import com.thesis.recommenderapp.domain.Item;
+import com.thesis.recommenderapp.domain.User;
+import com.thesis.recommenderapp.domain.Watched;
 
 public interface WatchedDao extends CrudRepository<Watched, Long> {
 

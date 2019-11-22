@@ -1,9 +1,11 @@
 package com.thesis.recommenderapp.controllers;
 
-import com.thesis.recommenderapp.domain.RegistrationRequest;
-import com.thesis.recommenderapp.service.UserService;
-import com.thesis.recommenderapp.service.exceptions.UsernameAlreadyExistsException;
-import lombok.extern.slf4j.Slf4j;
+import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -16,14 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
+import com.thesis.recommenderapp.domain.RegistrationRequest;
+import com.thesis.recommenderapp.service.UserService;
+import com.thesis.recommenderapp.service.exceptions.UsernameAlreadyExistsException;
 
 @Controller
-@Slf4j
 public class RegistrationController {
 
     @Autowired
@@ -99,7 +98,6 @@ public class RegistrationController {
     }
 
     private void addFriendIfNeeded(Long friendId, Long id) {
-        log.info("friendId: " + friendId);
         if (friendId != null) {
             userService.addFriend(friendId, id);
         }

@@ -33,14 +33,6 @@ public class ItemService {
         return itemDao.findAllByTitleContainingIgnoreCase(substring, pageable);
     }
 
-    public Long saveItem(UploadItemRequest uploadItemRequest) {
-        try {
-            return saveByTitleOrURL(uploadItemRequest);
-        } catch (IOException e) {
-            throw new ImdbException(e.getMessage());
-        }
-    }
-
     public Long saveByImdbId(String imdbId) {
         try {
             return save(imdbId);
@@ -49,15 +41,12 @@ public class ItemService {
         }
     }
 
-    private Long save(String imdbId) throws IOException {
-        Long id;
-        if (!itemDao.existsByImdbId(imdbId)) {
-            String specificSearchResult = imdbAPIGetService.getSpecificSearchResults(imdbId);
-            id = saveMovieOrSeries(specificSearchResult);
-        } else {
-            id = itemDao.findByImdbId(imdbId).getId();
+    public Long saveItem(UploadItemRequest uploadItemRequest) {
+        try {
+            return saveByTitleOrURL(uploadItemRequest);
+        } catch (IOException e) {
+            throw new ImdbException(e.getMessage());
         }
-        return id;
     }
 
     private Long saveByTitleOrURL(UploadItemRequest uploadItemRequest) throws IOException {
@@ -75,14 +64,21 @@ public class ItemService {
         return save(jsonParserService.getImdbId(generalSearchResult));
     }
 
-    private Long saveMovieOrSeries(String specificSearchResult) {
-        return itemDao.save(jsonParserService.getItem(specificSearchResult)).getId();
-    }
-
     private Long saveByURL(UploadItemRequest uploadItemRequest) throws IOException {
         List<String> urlParts = Arrays.asList(uploadItemRequest.getTitleOrURL().split("/"));
         String imdbId = urlParts.get(urlParts.indexOf("title") + 1);
         return save(imdbId);
+    }
+
+    private Long save(String imdbId) throws IOException {
+        Long id;
+        if (!itemDao.existsByImdbId(imdbId)) {
+            String specificSearchResult = imdbAPIGetService.getSpecificSearchResults(imdbId);
+            id = itemDao.save(jsonParserService.getItem(specificSearchResult)).getId();
+        } else {
+            id = itemDao.findByImdbId(imdbId).getId();
+        }
+        return id;
     }
 
 }

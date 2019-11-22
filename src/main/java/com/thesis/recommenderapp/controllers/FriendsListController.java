@@ -1,10 +1,14 @@
 package com.thesis.recommenderapp.controllers;
 
-import com.thesis.recommenderapp.domain.EmailAddress;
-import com.thesis.recommenderapp.domain.SearchString;
-import com.thesis.recommenderapp.domain.User;
-import com.thesis.recommenderapp.service.EmailSenderService;
-import com.thesis.recommenderapp.service.UserService;
+import java.security.Principal;
+import java.util.Set;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,13 +21,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
-import java.security.Principal;
-import java.util.Set;
+import com.thesis.recommenderapp.domain.EmailAddress;
+import com.thesis.recommenderapp.domain.SearchString;
+import com.thesis.recommenderapp.domain.User;
+import com.thesis.recommenderapp.service.EmailSenderService;
+import com.thesis.recommenderapp.service.UserService;
 
 @Controller
 public class FriendsListController {
@@ -79,9 +81,9 @@ public class FriendsListController {
         model.addAttribute("emailSent", true);
         User user = userService.getUserByUserName(principal.getName());
         String baseUrl = ServletUriComponentsBuilder.fromRequestUri(request)
-            .replacePath(null)
-            .build()
-            .toUriString();
+                .replacePath(null)
+                .build()
+                .toUriString();
         emailSenderService.sendInvite(email.getEmail(), user, baseUrl);
     }
 

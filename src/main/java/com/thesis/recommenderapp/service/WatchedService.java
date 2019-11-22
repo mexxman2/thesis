@@ -1,18 +1,19 @@
 package com.thesis.recommenderapp.service;
 
-import com.thesis.recommenderapp.dao.WatchedDao;
-import com.thesis.recommenderapp.domain.AddToWatchListItem;
-import com.thesis.recommenderapp.domain.Item;
-import com.thesis.recommenderapp.domain.User;
-import com.thesis.recommenderapp.domain.Watched;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import com.thesis.recommenderapp.dao.WatchedDao;
+import com.thesis.recommenderapp.domain.AddToWatchListItem;
+import com.thesis.recommenderapp.domain.Item;
+import com.thesis.recommenderapp.domain.User;
+import com.thesis.recommenderapp.domain.Watched;
 
 @Service
 @Transactional
@@ -49,15 +50,15 @@ public class WatchedService {
         return watchedDao.findByUserAndItem(user, item);
     }
 
-    private List<Item> getWatchedItems(Long userId) {
-        return watchedDao.findAllByUserId(userId).stream().map(Watched::getItem).collect(Collectors.toList());
-    }
-
     public void deleteWatched(User user, Long watchedId) {
         Watched watched = watchedDao.findById(watchedId).get();
         user.deleteWatched(watched);
         watchedDao.delete(watched);
         userService.saveUser(user);
+    }
+
+    private List<Item> getWatchedItems(Long userId) {
+        return watchedDao.findAllByUserId(userId).stream().map(Watched::getItem).collect(Collectors.toList());
     }
 
 }

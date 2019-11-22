@@ -1,6 +1,8 @@
 package com.thesis.recommenderapp.domain;
 
-import lombok.Data;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,11 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+
+import lombok.Data;
 
 @Entity
 @Table(name = "reco_user")
@@ -22,11 +21,7 @@ public class User {
     @Id
     @GeneratedValue
     private Long id;
-    @NotNull
-    @NotEmpty
     private String userName;
-    @NotNull
-    @NotEmpty
     private String password;
     private boolean enabled;
     @OneToMany
@@ -48,9 +43,9 @@ public class User {
 
     public void updateWatched(Watched watched) {
         this.watched.stream()
-            .filter(myWatched -> myWatched.getItem().equals(watched.getItem()))
-            .findFirst().get()
-            .setRating(watched.getRating());
+                .filter(myWatched -> myWatched.getItem().equals(watched.getItem()))
+                .findFirst().get()
+                .setRating(watched.getRating());
     }
 
     public void deleteWatched(Watched watched) {
