@@ -46,6 +46,7 @@
         </div>
     </c:otherwise>
 </c:choose>
+<br>
 <div class="row">
     <form:form modelAttribute="email" action="sendEmail" method="post">
         <div class="form-row">
