@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<h1>Welcome</h1>
-<h2>Login or Register to start!</h2>
+<h2>Login</h2>
 
 <form:form modelAttribute="loginRequest" action="login">
     <div class="form-group row">
