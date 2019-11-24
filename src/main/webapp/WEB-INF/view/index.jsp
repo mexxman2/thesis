@@ -3,7 +3,7 @@
 
 <h1>Welcome</h1>
 <c:if test="${not empty recommended}">
-    <h2>Recommended to you</h2>
+    <h2>Popular with your friends</h2>
     <c:forEach var="item" items="${recommended}">
         <div class="row">
             <td><a href="<c:url value='/details?itemId=${item.id}' />">${item.title}</a></td>
