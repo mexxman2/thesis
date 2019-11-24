@@ -19,7 +19,7 @@
             <form:errors path="*" element="div" class="alert alert-danger" role="alert" />
         </div>
         <c:if test="${status.error}">
-            <a class="btn btn-primary" href="<c:url value='/confirmUpload' />">Confirm</a>
+            <a class="btn btn-info" href="<c:url value='/confirmUpload' />">Confirm</a>
         </c:if>
     </spring:bind>
     <div class="form-group row">
@@ -39,6 +39,6 @@
         </div>
     </div>
     <div class="form-row">
-        <button type="submit" class="btn btn-primary">Add</button>
+        <button type="submit" class="btn btn-info">Add</button>
     </div>
 </form:form>

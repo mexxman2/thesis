@@ -27,6 +27,6 @@
             <form:option value="9" label="9"/>
             <form:option value="10" label="10"/>
         </form:select>
-        <button type="submit" class="btn btn-primary">Add to list</button>
+        <button type="submit" class="btn btn-info">Add to list</button>
     </div>
 </form:form>

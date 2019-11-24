@@ -24,6 +24,6 @@
         </div>
     </div>
     <div class="form-row">
-        <button type="submit" class="btn btn-primary">Register</button>
+        <button type="submit" class="btn btn-info">Register</button>
     </div>
 </form:form>

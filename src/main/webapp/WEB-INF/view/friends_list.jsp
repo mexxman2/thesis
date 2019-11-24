@@ -57,7 +57,7 @@
                 <form:input path="email" id="email" placeholder="Email address" class="form-control mx-sm-2" />
             </div>
             <div class="col-xs-3">
-                <button type="submit" class="btn btn-primary">Send</button>
+                <button type="submit" class="btn btn-info">Send</button>
             </div>
         </div>
         <div class="form-group row">
