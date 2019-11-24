@@ -10,6 +10,7 @@
         </div>
     </c:forEach>
 </c:if>
+<br>
 <h2>Top 10 most popular items</h2>
 <c:forEach var="item" items="${topTenItems}">
     <div class="row">
