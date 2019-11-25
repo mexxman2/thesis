@@ -64,6 +64,8 @@
             <form:errors path="*" element="div" class="alert alert-danger" role="alert" />
         </div>
     </form:form>
+</div>
+<div class"row">
     <c:if test="${emailSent}">
         <p>Email sent</p>
     </c:if>
