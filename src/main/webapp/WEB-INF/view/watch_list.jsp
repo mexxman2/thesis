@@ -92,17 +92,15 @@
         </c:choose>
     </c:when>
     <c:otherwise>
-        <div class="row">
-            <h2>${user.userName}&#39;s list</h2>
-            <c:choose>
-                <c:when test="${isFriend}">
-                    <a href="<c:url value='/deleteFriend?userId=${user.id}' />">Delete friend</a>
-                </c:when>
-                <c:otherwise>
-                    <a href="<c:url value='/addFriend?userId=${user.id}' />">Add friend</a>
-                </c:otherwise>
-            </c:choose>
-        </div>
+        <h2>${user.userName}&#39;s list</h2>
+        <c:choose>
+            <c:when test="${isFriend}">
+                <a href="<c:url value='/deleteFriend?userId=${user.id}' />">Delete friend</a>
+            </c:when>
+            <c:otherwise>
+                <a href="<c:url value='/addFriend?userId=${user.id}' />">Add friend</a>
+            </c:otherwise>
+        </c:choose>
         <c:choose>
             <c:when test="${empty items}">
                 <p>List is empty</p>
