@@ -30,7 +30,6 @@ import com.thesis.recommenderapp.service.EmailSenderService;
 import com.thesis.recommenderapp.service.UserService;
 
 @Controller
-@Slf4j
 public class FriendsListController {
 
     @Autowired
@@ -76,8 +75,7 @@ public class FriendsListController {
 
     private void rejectSendInvite(BindingResult bindingResult, Set<ConstraintViolation<EmailAddress>> violations) {
         for (ConstraintViolation<EmailAddress> violation : violations) {
-            log.info(violation.getMessage());
-            bindingResult.reject(violation.getMessage(), violation.getMessage());
+            bindingResult.rejectValue("email", violation.getMessage(), violation.getMessage());
         }
     }
 
