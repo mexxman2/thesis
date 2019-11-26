@@ -48,7 +48,7 @@
 </c:choose>
 <br>
 <div class="row">
-    <form:form modelAttribute="email" action="sendEmail" method="post">
+    <form:form modelAttribute="emailAddress" action="sendEmail" method="post">
         <div class="form-row">
             <div class="col-xs-3">
                 <label for="email">Invite friend: </label>

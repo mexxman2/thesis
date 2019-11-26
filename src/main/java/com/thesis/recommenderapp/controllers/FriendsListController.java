@@ -42,7 +42,7 @@ public class FriendsListController {
         return new SearchString();
     }
 
-    @ModelAttribute("email")
+    @ModelAttribute("emailAddress")
     public EmailAddress createEmailAddressModel() {
         return new EmailAddress();
     }
@@ -60,33 +60,22 @@ public class FriendsListController {
     }
 
     @RequestMapping("sendEmail")
-    public String sendEmail(@ModelAttribute("email") @Valid EmailAddress email, BindingResult bindingResult,
+    public String sendEmail(@ModelAttribute("emailAddress") @Valid EmailAddress emailAddress, BindingResult bindingResult,
                             Principal principal, Model model, HttpServletRequest request) {
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        Validator validator = factory.getValidator();
-        Set<ConstraintViolation<EmailAddress>> violations = validator.validate(email);
-        if (violations.isEmpty()) {
-            sendInvite(email, principal, model, request);
-        } else {
-            rejectSendInvite(bindingResult, violations);
+        if (!bindingResult.hasErrors()) {
+            sendInvite(emailAddress, principal, model, request);
         }
-        return "forward:friends_list";
+        return "friends_list";
     }
 
-    private void rejectSendInvite(BindingResult bindingResult, Set<ConstraintViolation<EmailAddress>> violations) {
-        for (ConstraintViolation<EmailAddress> violation : violations) {
-            bindingResult.rejectValue("email", "error.notValidEmail", violation.getMessage());
-        }
-    }
-
-    private void sendInvite(@ModelAttribute("email") EmailAddress email, Principal principal, Model model, HttpServletRequest request) {
+    private void sendInvite(@ModelAttribute("emailAddress") EmailAddress emailAddress, Principal principal, Model model, HttpServletRequest request) {
         model.addAttribute("emailSent", true);
         User user = userService.getUserByUserName(principal.getName());
         String baseUrl = ServletUriComponentsBuilder.fromRequestUri(request)
                 .replacePath(null)
                 .build()
                 .toUriString();
-        emailSenderService.sendInvite(email.getEmail(), user, baseUrl);
+        emailSenderService.sendInvite(emailAddress.getEmail(), user, baseUrl);
     }
 
 }
