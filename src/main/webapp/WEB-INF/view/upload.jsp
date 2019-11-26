@@ -6,27 +6,22 @@
 <h2>Add a new movie or series from imdb</h2>
 
 <form:form modelAttribute="uploadItem" action="uploadItemPost">
-    <spring:bind path="titleOrURL">
-        <div class="form-group row">
-            <div class="col-sm-2">
-                <label for="input_title_or_url">Imdb title or URL</label>
-            </div>
-            <div class="col-sm-10">
-                <form:input path="titleOrURL" id="input_title_or_url" class="form-control" value="${substring}" />
-            </div>
+    <div class="form-group row">
+        <div class="col-sm-2">
+            <label for="input_title_or_url">Imdb title or URL</label>
         </div>
-        <div class="form-group row">
-            <form:errors path="*" element="div" class="alert alert-danger" role="alert" />
+        <div class="col-sm-10">
+            <form:input path="titleOrURL" id="input_title_or_url" class="form-control" value="${substring}" />
         </div>
-        ${status.error}
-        <br>
-        ${status}
-        <c:if test="${status.error}">
-            <div class="form-group row">
-                <a class="btn btn-info" href="<c:url value='/confirmUpload' />">Confirm</a>
-            </div>
-        </c:if>
-    </spring:bind>
+    </div>
+    <div class="form-group row">
+        <form:errors path="*" element="div" class="alert alert-danger" role="alert" />
+    </div>
+    <c:if test="${notSpecificEnough}">
+        <div class="form-group row">
+            <a class="btn btn-info" href="<c:url value='/confirmUpload' />">Confirm</a>
+        </div>
+    </c:if>
     <div class="form-group row">
         <div class="col-sm-1">
             <label for="movie">Movie</label>

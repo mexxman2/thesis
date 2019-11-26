@@ -43,12 +43,12 @@ public class ItemUploadController {
     }
 
     @RequestMapping(value = "uploadItemPost", method = RequestMethod.POST)
-    public String uploadItemPost(@ModelAttribute("uploadItem") @Valid UploadItemRequest uploadItemRequest, BindingResult bindingResult, HttpServletResponse response) {
+    public String uploadItemPost(@ModelAttribute("uploadItem") @Valid UploadItemRequest uploadItemRequest, BindingResult bindingResult, HttpServletResponse response, Model model) {
         String result;
         if (bindingResult.hasErrors()) {
             result = "upload";
         } else {
-            result = trySaveItem(uploadItemRequest, bindingResult, response);
+            result = trySaveItem(uploadItemRequest, bindingResult, response, model);
         }
         return result;
     }
@@ -62,7 +62,7 @@ public class ItemUploadController {
         return "redirect:details?itemId=" + id;
     }
 
-    private String trySaveItem(@ModelAttribute("uploadItem") @Valid UploadItemRequest uploadItemRequest, BindingResult bindingResult, HttpServletResponse response) {
+    private String trySaveItem(@ModelAttribute("uploadItem") @Valid UploadItemRequest uploadItemRequest, BindingResult bindingResult, HttpServletResponse response, Model model) {
         String result;
         try {
             Long id = itemService.saveItem(uploadItemRequest);
@@ -72,6 +72,7 @@ public class ItemUploadController {
             result = "upload";
         } catch (ShouldBeMoreSpecificException e) {
             bindingResult.rejectValue("titleOrURL", "error.notSpecificEnough", createMessage(e));
+            model.addAttribute("notSpecificEnough", true);
             response.addCookie(new Cookie("imdbId", e.getImdbId()));
             result = "upload";
         }
