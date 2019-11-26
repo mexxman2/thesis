@@ -65,7 +65,7 @@ public class FriendsListController {
         if (!bindingResult.hasErrors()) {
             sendInvite(emailAddress, principal, model, request);
         } {
-            model.addAttribute("emailError", bindingResult.getFieldError("email"));
+            model.addAttribute("emailError", bindingResult.getFieldError("email").getDefaultMessage());
         }
         return "forward:friends_list";
     }

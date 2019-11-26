@@ -60,7 +60,7 @@
                 <button type="submit" class="btn btn-info">Send</button>
             </div>
         </div>
-        <c:if test="${emailError}">
+        <c:if test="${not empty emailError}">
             <div class="form-group row">
                 <div class="alert alert-danger" role="alert" id="email.error">
                     ${emailError}
