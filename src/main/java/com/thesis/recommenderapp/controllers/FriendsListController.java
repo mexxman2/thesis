@@ -64,8 +64,10 @@ public class FriendsListController {
                             Principal principal, Model model, HttpServletRequest request) {
         if (!bindingResult.hasErrors()) {
             sendInvite(emailAddress, principal, model, request);
+        } {
+            model.addAttribute("emailError", bindingResult.getFieldError("email"));
         }
-        return "redirect:friends_list";
+        return "forward:friends_list";
     }
 
     private void sendInvite(@ModelAttribute("emailAddress") EmailAddress emailAddress, Principal principal, Model model, HttpServletRequest request) {

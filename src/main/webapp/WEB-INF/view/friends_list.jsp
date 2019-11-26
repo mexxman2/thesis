@@ -60,9 +60,13 @@
                 <button type="submit" class="btn btn-info">Send</button>
             </div>
         </div>
-        <div class="form-group row">
-            <form:errors path="*" element="div" class="alert alert-danger" role="alert" />
-        </div>
+        <c:if test="${emailError}">
+            <div class="form-group row">
+                <div class="alert alert-danger" role="alert" id="email.error">
+                    ${emailError}
+                </div>
+            </div>
+        </c:if>
     </form:form>
 </div>
 <div class"row">
