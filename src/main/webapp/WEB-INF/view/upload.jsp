@@ -19,7 +19,9 @@
             <form:errors path="*" element="div" class="alert alert-danger" role="alert" />
         </div>
         <c:if test="${status.error}">
-            <a class="btn btn-info" href="<c:url value='/confirmUpload' />">Confirm</a>
+            <div class="form-group row">
+                <a class="btn btn-info" href="<c:url value='/confirmUpload' />">Confirm</a>
+            </div>
         </c:if>
     </spring:bind>
     <div class="form-group row">
