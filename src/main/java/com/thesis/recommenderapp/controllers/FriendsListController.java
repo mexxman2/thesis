@@ -9,6 +9,7 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,6 +29,7 @@ import com.thesis.recommenderapp.service.EmailSenderService;
 import com.thesis.recommenderapp.service.UserService;
 
 @Controller
+@Slf4j
 public class FriendsListController {
 
     @Autowired
@@ -73,6 +75,7 @@ public class FriendsListController {
 
     private void rejectSendInvite(BindingResult bindingResult, Set<ConstraintViolation<EmailAddress>> violations) {
         for (ConstraintViolation<EmailAddress> violation : violations) {
+            log.info("email violation");
             bindingResult.reject(violation.getMessage(), violation.getMessage());
         }
     }
