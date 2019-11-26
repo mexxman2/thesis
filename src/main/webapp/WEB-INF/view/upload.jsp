@@ -18,6 +18,9 @@
         <div class="form-group row">
             <form:errors path="*" element="div" class="alert alert-danger" role="alert" />
         </div>
+        ${status.error}
+        <br>
+        ${status}
         <c:if test="${status.error}">
             <div class="form-group row">
                 <a class="btn btn-info" href="<c:url value='/confirmUpload' />">Confirm</a>
