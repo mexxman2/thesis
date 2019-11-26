@@ -5,6 +5,7 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolation;
+import javax.validation.Valid;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
@@ -60,7 +61,7 @@ public class FriendsListController {
     }
 
     @RequestMapping("sendEmail")
-    public String sendEmail(@ModelAttribute("email") EmailAddress email, BindingResult bindingResult,
+    public String sendEmail(@ModelAttribute("email") @Valid EmailAddress email, BindingResult bindingResult,
                             Principal principal, Model model, HttpServletRequest request) {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
