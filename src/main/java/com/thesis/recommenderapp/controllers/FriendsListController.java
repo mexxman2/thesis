@@ -75,7 +75,7 @@ public class FriendsListController {
 
     private void rejectSendInvite(BindingResult bindingResult, Set<ConstraintViolation<EmailAddress>> violations) {
         for (ConstraintViolation<EmailAddress> violation : violations) {
-            bindingResult.rejectValue("email", violation.getMessage(), violation.getMessage());
+            bindingResult.rejectValue("email", "error.notValidEmail", violation.getMessage());
         }
     }
 
