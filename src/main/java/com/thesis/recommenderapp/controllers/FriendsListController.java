@@ -5,10 +5,12 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolation;
+import javax.validation.Valid;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -40,7 +42,7 @@ public class FriendsListController {
         return new SearchString();
     }
 
-    @ModelAttribute("email")
+    @ModelAttribute("emailAddress")
     public EmailAddress createEmailAddressModel() {
         return new EmailAddress();
     }
@@ -58,33 +60,24 @@ public class FriendsListController {
     }
 
     @RequestMapping("sendEmail")
-    public String sendEmail(@ModelAttribute("email") EmailAddress email, BindingResult bindingResult,
+    public String sendEmail(@ModelAttribute("emailAddress") @Valid EmailAddress emailAddress, BindingResult bindingResult,
                             Principal principal, Model model, HttpServletRequest request) {
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        Validator validator = factory.getValidator();
-        Set<ConstraintViolation<EmailAddress>> violations = validator.validate(email);
-        if (violations.isEmpty()) {
-            sendInvite(email, principal, model, request);
+        if (!bindingResult.hasErrors()) {
+            sendInvite(emailAddress, principal, model, request);
         } else {
-            rejectSendInvite(bindingResult, violations);
+            model.addAttribute("emailError", bindingResult.getFieldError("email").getDefaultMessage());
         }
         return "forward:friends_list";
     }
 
-    private void rejectSendInvite(BindingResult bindingResult, Set<ConstraintViolation<EmailAddress>> violations) {
-        for (ConstraintViolation<EmailAddress> violation : violations) {
-            bindingResult.reject(violation.getMessage(), violation.getMessage());
-        }
-    }
-
-    private void sendInvite(@ModelAttribute("email") EmailAddress email, Principal principal, Model model, HttpServletRequest request) {
+    private void sendInvite(@ModelAttribute("emailAddress") EmailAddress emailAddress, Principal principal, Model model, HttpServletRequest request) {
         model.addAttribute("emailSent", true);
         User user = userService.getUserByUserName(principal.getName());
         String baseUrl = ServletUriComponentsBuilder.fromRequestUri(request)
                 .replacePath(null)
                 .build()
                 .toUriString();
-        emailSenderService.sendInvite(email.getEmail(), user, baseUrl);
+        emailSenderService.sendInvite(emailAddress.getEmail(), user, baseUrl);
     }
 
 }
