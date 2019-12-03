@@ -31,9 +31,4 @@ public class LoginController {
         return "login";
     }
 
-    private boolean isAuthenticated() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return authentication != null && !(authentication instanceof AnonymousAuthenticationToken) && authentication.isAuthenticated();
-    }
-
 }
