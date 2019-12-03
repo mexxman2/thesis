@@ -56,9 +56,7 @@ public class ItemUploadController {
     @RequestMapping("confirmUpload")
     public String confirmUpload(@CookieValue("imdbId") String imdbId, HttpServletResponse response) {
         Long id = itemService.saveByImdbId(imdbId);
-        Cookie cookie = new Cookie("imdbId", null);
-        cookie.setMaxAge(0);
-        response.addCookie(cookie);
+        deleteCookie(response);
         return "redirect:details?itemId=" + id;
     }
 
@@ -81,6 +79,12 @@ public class ItemUploadController {
 
     private String createMessage(ShouldBeMoreSpecificException e) {
         return "Did you mean: " + e.getMessage() + "? Then click the confirm button below. Otherwise please add a more specific title.";
+    }
+
+    private void deleteCookie(HttpServletResponse response) {
+        Cookie cookie = new Cookie("imdbId", null);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
     }
 
 }
