@@ -22,7 +22,7 @@ public class LoginController {
     }
 
     @RequestMapping("login")
-    public String login(BindingResult bindingResult, HttpSession httpSession) {
+    public String login(@ModelAttribute("loginRequest") LoginRequest loginRequest, BindingResult bindingResult, HttpSession httpSession) {
         Throwable authException = (Throwable) httpSession.getAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
         if (authException != null) {
             bindingResult.reject(authException.getMessage(), authException.getMessage());
