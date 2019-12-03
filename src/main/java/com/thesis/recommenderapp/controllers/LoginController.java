@@ -22,19 +22,12 @@ public class LoginController {
     }
 
     @RequestMapping("login")
-    public String login(@ModelAttribute("loginRequest") LoginRequest loginRequest, BindingResult bindingResult, HttpSession httpSession) {
-        /*String result;
-        if (isAuthenticated()) {
-            result = "redirect:index";
-        } else {
-            Throwable authException = (Throwable) httpSession.getAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
-            if (authException != null) {
-                bindingResult.reject(authException.getMessage(), authException.getMessage());
-                httpSession.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
-            }
-            result = "login";
+    public String login(BindingResult bindingResult, HttpSession httpSession) {
+        Throwable authException = (Throwable) httpSession.getAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
+        if (authException != null) {
+            bindingResult.reject(authException.getMessage(), authException.getMessage());
+            httpSession.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
         }
-        return result;*/
         return "login";
     }
 
