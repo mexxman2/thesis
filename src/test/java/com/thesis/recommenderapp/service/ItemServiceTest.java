@@ -1,5 +1,6 @@
 package com.thesis.recommenderapp.service;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 
@@ -20,6 +21,7 @@ import org.springframework.data.domain.Pageable;
 import com.thesis.recommenderapp.dao.ItemDao;
 import com.thesis.recommenderapp.domain.Item;
 import com.thesis.recommenderapp.domain.UploadItemRequest;
+import com.thesis.recommenderapp.service.exceptions.ImdbException;
 
 public class ItemServiceTest {
 
@@ -105,6 +107,15 @@ public class ItemServiceTest {
         then(itemDao).should().save(itemToSave);
     }
 
+    @Test(expected = ImdbException.class)
+    public void testSaveByImdbIdShouldThrowExceptionIfImdbAPIFailed() throws IOException {
+        //GIVEN
+        given(imdbAPIGetService.getSpecificSearchResults(any())).willThrow(new IOException());
+        //WHEN
+        Long result = underTest.saveByImdbId(TEST_IMDB_ID);
+        //THEN exception
+    }
+
     @Test
     public void testSaveItemShouldSaveByTitleIfImdbIdIsNotPresent() throws IOException {
         //GIVEN
@@ -147,6 +158,18 @@ public class ItemServiceTest {
         then(imdbAPIGetService).should().getSpecificSearchResults(TEST_IMDB_ID);
         then(jsonParserService).should().getItem(TEST_SEARCH_RESULT);
         then(itemDao).should().save(itemToSave);
+    }
+
+
+
+    @Test(expected = ImdbException.class)
+    public void testSaveItemShouldThrowExceptionIfImdbAPIFailed() throws IOException {
+        //GIVEN
+        UploadItemRequest uploadItemRequest = createUploadItemRequest("");
+        given(imdbAPIGetService.getGeneralSearchResults(any())).willThrow(new IOException());
+        //WHEN
+        Long result = underTest.saveItem(uploadItemRequest);
+        //THEN exception
     }
 
     private Item createItem() {
