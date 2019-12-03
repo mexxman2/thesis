@@ -35,7 +35,7 @@ public class LoginController {
             result = "login";
         }
         return result;*/
-        return "";
+        return "login";
     }
 
     private boolean isAuthenticated() {
