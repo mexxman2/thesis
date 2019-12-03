@@ -23,7 +23,7 @@ public class LoginController {
 
     @RequestMapping("login")
     public String login(@ModelAttribute("loginRequest") LoginRequest loginRequest, BindingResult bindingResult, HttpSession httpSession) {
-        String result;
+        /*String result;
         if (isAuthenticated()) {
             result = "redirect:index";
         } else {
@@ -34,7 +34,8 @@ public class LoginController {
             }
             result = "login";
         }
-        return result;
+        return result;*/
+        return "";
     }
 
     private boolean isAuthenticated() {
