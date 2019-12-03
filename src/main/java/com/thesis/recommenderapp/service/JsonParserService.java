@@ -29,17 +29,21 @@ public class JsonParserService {
 
     public Item getItem(String jsonString) {
         JSONObject jsonObject = getObject(jsonString);
-        return Item.builder()
-                .title(jsonObject.getString("Title"))
-                .year(jsonObject.getString("Year"))
-                .runtime(jsonObject.getString("Runtime"))
-                .genre(jsonObject.getString("Genre"))
-                .description(jsonObject.getString("Plot"))
-                .imdbRating(jsonObject.getString("imdbRating"))
-                .type(jsonObject.getString("Type"))
-                .imdbId(jsonObject.getString("imdbID"))
-                .posterPath(jsonObject.getString("Poster"))
-                .build();
+        try {
+            return Item.builder()
+                    .title(jsonObject.getString("Title"))
+                    .year(jsonObject.getString("Year"))
+                    .runtime(jsonObject.getString("Runtime"))
+                    .genre(jsonObject.getString("Genre"))
+                    .description(jsonObject.getString("Plot"))
+                    .imdbRating(jsonObject.getString("imdbRating"))
+                    .type(jsonObject.getString("Type"))
+                    .imdbId(jsonObject.getString("imdbID"))
+                    .posterPath(jsonObject.getString("Poster"))
+                    .build();
+        } catch (JSONException e) {
+            throw new SearchReturnedErrorException();
+        }
     }
 
     private JSONObject getObject(String jsonString) {
