@@ -35,13 +35,25 @@ public class RecommendationService {
 
     public List<Item> getRecommendations(String userName) {
         User user = userService.getUserByUserName(userName);
-        Iterable<Watched> watchedList = user.getFriends().stream().flatMap(friend -> friend.getWatched().stream()).collect(Collectors.toList());
-        List<Item> myWatchedItems = watchedDao.findAllByUserId(user.getId()).stream().map(Watched::getItem).collect(Collectors.toList());
+        Iterable<Watched> watchedList = getWatchedListsOfFriends(user);
+        List<Item> myWatchedItems = getMyWatchedItems(user);
         Map<Item, Integer> weightedItems = getWeightedItems(watchedList);
         Map<Item, Integer> sorted = sortMap(weightedItems);
         List<Item> items = new ArrayList<>(sorted.keySet());
         items = items.stream().filter(item -> !myWatchedItems.contains(item)).collect(Collectors.toList());
         return (items.size() > 5) ? items.subList(0, 5) : items;
+    }
+
+    private List<Item> getMyWatchedItems(User user) {
+        return watchedDao.findAllByUserId(user.getId()).stream()
+                    .map(Watched::getItem)
+                    .collect(Collectors.toList());
+    }
+
+    private Iterable<Watched> getWatchedListsOfFriends(User user) {
+        return user.getFriends().stream()
+                    .flatMap(friend -> friend.getWatched().stream())
+                    .collect(Collectors.toList());
     }
 
     private Map<Item, Integer> getWeightedItems(Iterable<Watched> watchedList) {
